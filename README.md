@@ -15,8 +15,8 @@ and can be retrieved from MalwareBazaar.
 
 ## Weekly reports
 
-[`weekly/`](weekly/) holds dated honeypot activity summaries: attack volume, top source networks, malware families seen,
-new payload servers and what we reported that week.
+[`weekly/`](weekly/) holds dated honeypot activity summaries: attack volume, top source networks, credentials tried, and
+the payload servers seen that week. Latest: [2026-W40](weekly/2026-W40.md).
 
 ## How we work
 
