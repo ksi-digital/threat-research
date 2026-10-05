@@ -1,6 +1,7 @@
 # Ancient botnet — detection rules
 
-Tested detection content for the [Ancient botnet](../). Use under your own validation.
+Detection content for the [Ancient botnet](../). The YARA rule is tested against real samples (see notes); the Suricata
+and Sigma rules are written to standard syntax but not engine-validated here. Validate in your own environment.
 
 | File | Engine | Detects |
 |---|---|---|
