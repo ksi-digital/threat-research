@@ -1,0 +1,18 @@
+type,indicator,role,first_seen_utc,source,reference
+ip:port,89.163.157[.]131:35342,botnet C2 (custom "ANCT" protocol),2026-10-05T01:36:00Z,sandbox (C2 lookup observed; live handshake 2026-10-05T02:01Z),https://threatfox.abuse.ch/browse.php?search=ioc%3A89.163.157.131
+domain,zyrec2.duckdns[.]org,C2 name (resolved via DNS-over-TLS to 1.1.1.1:853),2026-10-05T01:36:00Z,sandbox,https://threatfox.abuse.ch/ioc/1822702/
+url,hxxp://89.163.157[.]131:8080/persist.sh,dropper script,2026-10-04T15:37:39Z,Cowrie honeypot,https://urlhaus.abuse.ch/url/3928556/
+url,hxxp://89.163.157[.]131:8080/x86_64,bot binary (x86-64),2026-10-04T15:37:41Z,Cowrie honeypot,https://urlhaus.abuse.ch/url/3928557/
+url,hxxp://89.163.157[.]131:8080/arm7,bot binary (ARMv7),,third-party,https://urlhaus.abuse.ch/url/3927883/
+sha256,5e6c83022a7415047f7e9d9cb89e43d6de7522801b353ce10eda85c018be76c8,persist.sh v1 (2802 B),2026-10-04T15:37:39Z,Cowrie honeypot,
+sha256,659742f14304f2ec1cf1ec34833b93002cd360835fff3073d19ea2edf23d6bea,persist.sh v2 (3380 B),2026-10-04,Cowrie honeypot,
+sha256,ac62a1dfc283429341b99196d974da0a18ffe4f4e30ac28eb4e9583aed4b592f,persist.sh v3 (5952 B),2026-10-04T19:09:48Z,Cowrie honeypot,
+sha256,6c44cbf5eb5e4f5231964a2fb24ef466b17e967f0d26f57c8285ade7424970db,bot ELF x86-64 (437232 B; static; stripped),2026-10-04T15:37:41Z,Cowrie honeypot,
+sha256,748f50d41a7232d012e1eefdbe9207cc448c2710335989badf458a4720dd717b,bot ELF x86-64 rebuild (437232 B),2026-10-04T19:09:51Z,Cowrie honeypot,
+ip,94.154.43[.]138,infected device that delivered the dropper over Telnet,2026-10-04T15:37:39Z,Cowrie honeypot,https://www.abuseipdb.com/check/94.154.43.138
+file,<dir>/.ancient,installed bot binary (dir = most durable writable mount),,dropper,
+file,/etc/init.d/.ancient,boot persistence,,dropper,
+file,/etc/profile.d/.ancient.sh,login persistence (v3),,dropper,
+cron,*/5 * * * * <dir>/.ancient,cron persistence (user crontab; v3 also /etc/crontab and /var/spool/cron/root),,dropper,
+string,ANCIENT_STARTED / ANCIENT_NOCONN / ANCIENT_SKIP / ANCIENT_FAIL,dropper status markers printed to the loader,,dropper,
+network,"TCP payload ""ANCT"" (41 4E 43 54) as first 4 bytes client->server",C2 protocol tag,2026-10-05T02:01:09Z,sandbox pcap,

