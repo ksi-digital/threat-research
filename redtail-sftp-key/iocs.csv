@@ -1,0 +1,6 @@
+type,indicator,role,first_seen_utc,source,reference
+ssh-key-fp,SHA256:O/at8341SoPpKvTPvMsJSgjQm30md9VTS2it25sY0vg,embedded ed25519 SFTP client key (comment dlr@sftp); same in web + SSH vector,2026-10-02T21:30:00Z,honeypot (WAF body + Cowrie),
+ip:port,217.60.103[.]56:22,RedTail stage-2 SFTP C2 (web/PHP-CGI vector),2026-10-02T21:30:00Z,WordPress honeypot WAF body,
+ip:port,217.60.102[.]5:22,RedTail stage-2 SFTP C2 (SSH-loader vector),2026-10-03T10:01:00Z,Cowrie honeypot,https://threatfox.abuse.ch/ioc/1948446/
+url,hxxps://217.60.102[.]5/sh,RedTail stage-2 HTTPS fallback,2026-10-03T06:15:00Z,third-party,https://urlhaus.abuse.ch/url/3927346/
+ua,libredtail-http,RedTail self-propagating scanner/dropper User-Agent,2026-10-02T01:16:00Z,WordPress honeypot,

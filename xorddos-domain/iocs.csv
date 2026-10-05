@@ -1,0 +1,19 @@
+type,indicator,role,first_seen_utc,source,reference
+domain,srv-stat-node[.]ru,XorDDoS C2 domain (previously unlisted),2026-10-03T19:13:00Z,sandbox (offline detonation),https://threatfox.abuse.ch/browse.php?search=ioc%3Asrv-stat-node.ru
+sha256,3064ca5f0f0099f9bb98503e0bcb42a2824da2be5c5c2549eea6c2511bea577a,XorDDoS ELF32 i386 sample (114768 B),2026-10-03T19:13:00Z,Cowrie honeypot,https://bazaar.abuse.ch/sample/3064ca5f0f0099f9bb98503e0bcb42a2824da2be5c5c2549eea6c2511bea577a/
+port,1531/tcp,XorDDoS C2 port,2026-10-03T19:13:00Z,sandbox,
+domain,cloud-init-config[.]tj,XorDDoS C2 domain,2026-09-29,ThreatFox,https://threatfox.abuse.ch/
+domain,system-patch-node[.]am,XorDDoS C2 domain,2026-09-29,ThreatFox,
+domain,proc-mem-status[.]md,XorDDoS C2 domain,2026-09-29,ThreatFox,
+domain,metadata-fetcher[.]vg,XorDDoS C2 domain,2026-09-29,ThreatFox,
+domain,legacy-data-stream[.]su,XorDDoS C2 domain,2026-09-29,ThreatFox,
+domain,host-metrics-rev[.]su,XorDDoS C2 domain,2026-09-29,ThreatFox,
+domain,flux-net-node[.]to,XorDDoS C2 domain,2026-09-29,ThreatFox,
+domain,dist-patch-log[.]vg,XorDDoS C2 domain,2026-09-29,ThreatFox,
+domain,core-sync-io[.]tj,XorDDoS C2 domain,2026-09-29,ThreatFox,
+domain,stellar-sync[.]to,XorDDoS C2 domain,2026-09-29,ThreatFox,
+domain,relay-agent-v4[.]am,XorDDoS C2 domain,2026-09-29,ThreatFox,
+domain,nexus-bridge[.]to,XorDDoS C2 domain,2026-09-29,ThreatFox,
+domain,net-sync-cache[.]md,XorDDoS C2 domain,2026-09-29,ThreatFox,
+domain,db-sync-service[.]ru,XorDDoS C2 domain,2026-09-29,ThreatFox,
+file,cron.hourly/gcc.sh,XorDDoS persistence (runs every 3 min),2026-10-03T19:13:00Z,sandbox,
