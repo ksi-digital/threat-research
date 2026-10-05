@@ -40,6 +40,8 @@ The C2 was identified from the sample's configuration only; we did not join the 
 
 ## Detection ideas
 
+Ready-to-use rules are in [`detection/`](detection/). The signals they encode:
+
 - Outbound TCP to `:6667`/`:6697` from a server that has no business on IRC.
 - A Perl process running from `/tmp` whose argv has been renamed, spawned right after `curl .../dred`.
 - The literal strings `Pregatit de actiune!` or `DDoS Perl IrcBot` in files or memory.

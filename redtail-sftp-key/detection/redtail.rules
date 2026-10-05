@@ -1,0 +1,7 @@
+# Suricata/Snort rule for the RedTail SFTP-key loader C2 endpoints. SIDs private range; tune before use.
+# RedTail rotates C2 IPs, so these are dated indicators, not permanent. The strongest durable signal is
+# the reused SSH client key fingerprint (see the Sigma rule and the finding README).
+# Reference: https://github.com/ksi-digital/threat-research/tree/main/redtail-sftp-key
+
+alert tcp $HOME_NET any -> 217.60.102.5 22 (msg:"KSI RedTail SFTP stage-2 pull (217.60.102.5, SSH vector)"; flow:to_server; classtype:trojan-activity; reference:url,threatfox.abuse.ch/ioc/1948446/; sid:9000031; rev:1;)
+alert tcp $HOME_NET any -> 217.60.103.56 22 (msg:"KSI RedTail SFTP stage-2 pull (217.60.103.56, web vector)"; flow:to_server; classtype:trojan-activity; reference:url,github.com/ksi-digital/threat-research/tree/main/redtail-sftp-key; sid:9000032; rev:1;)

@@ -1,0 +1,9 @@
+# Suricata/Snort rules for the XorDDoS activity we observed. SIDs in a private range; tune before use.
+# The ELF sample itself is detected by public rules (e.g. Elastic Linux_Trojan_Xorddos); these cover
+# the network behaviour. Reference: https://github.com/ksi-digital/threat-research/tree/main/xorddos-domain
+
+# C2 port observed in the sandbox (XorDDoS commonly uses non-standard high ports; 1531 here).
+alert tcp $HOME_NET any -> $EXTERNAL_NET 1531 (msg:"KSI XorDDoS C2 port 1531"; flow:to_server; threshold:type limit,track by_src,count 1,seconds 300; classtype:trojan-activity; reference:url,github.com/ksi-digital/threat-research/tree/main/xorddos-domain; sid:9000021; rev:1;)
+
+# DNS lookups for the C2 domain set (one naming scheme, odd TLDs). srv-stat-node.ru was previously unlisted.
+alert dns $HOME_NET any -> any any (msg:"KSI XorDDoS C2 domain lookup (srv-stat-node.ru)"; dns.query; content:"srv-stat-node.ru"; nocase; classtype:trojan-activity; sid:9000022; rev:1;)

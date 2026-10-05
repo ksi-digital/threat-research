@@ -51,6 +51,8 @@ The full 15-domain list is in [`iocs.csv`](iocs.csv) for completeness.
 
 ## Detection ideas
 
+Ready-to-use rules are in [`detection/`](detection/). The signals they encode:
+
 - A file in `cron.hourly` named `gcc.sh`, or a `gcc.pid` lock, on a server with no compiler-build cron.
 - Outbound TCP `:1531`.
 - DNS lookups for the `*-node` / `*-sync` domains above on the odd TLDs.

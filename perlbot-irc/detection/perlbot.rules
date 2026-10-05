@@ -1,0 +1,8 @@
+# Suricata/Snort rule for the PerlBot "Dred" IRC C2. SID in a private range; tune before use.
+# Reference: https://github.com/ksi-digital/threat-research/tree/main/perlbot-irc
+
+# Dated C2 endpoint (IRC). The host may change; treat as an indicator for the observation date.
+alert tcp $HOME_NET any -> 23.95.235.108 [6667,6697] (msg:"KSI PerlBot Dred IRC C2 connection"; flow:to_server; classtype:trojan-activity; reference:url,threatfox.abuse.ch/ioc/1948443/; sid:9000011; rev:1;)
+
+# Generic: an IRC JOIN to the bot's channel. Low-volume environments only; IRC is rare on servers.
+alert tcp $HOME_NET any -> $EXTERNAL_NET [6667,6697] (msg:"KSI PerlBot IRC JOIN #new (possible Dred bot)"; flow:established,to_server; content:"JOIN"; nocase; content:"#new"; distance:0; within:16; classtype:trojan-activity; sid:9000012; rev:1;)

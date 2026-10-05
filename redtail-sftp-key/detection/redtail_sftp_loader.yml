@@ -1,0 +1,33 @@
+title: RedTail SFTP-Key Loader Artifacts
+id: 5c2e8b74-9a1f-42d3-be6c-redtail0001
+status: experimental
+description: >
+  Detects the RedTail loader that writes an embedded SSH client key and config, then pulls its
+  next stage over SFTP (scp -s dlr@<C2>:sh) with an HTTPS fallback. The embedded ed25519 client
+  key reused across RedTail's web and SSH vectors has fingerprint
+  SHA256:O/at8341SoPpKvTPvMsJSgjQm30md9VTS2it25sY0vg (comment dlr@sftp).
+references:
+  - https://github.com/ksi-digital/threat-research/tree/main/redtail-sftp-key
+author: KSI Digital
+date: 2026/10/05
+logsource:
+  category: process_creation
+  product: linux
+detection:
+  scp_loader:
+    CommandLine|contains|all:
+      - 'scp'
+      - 'dlr@'
+      - ':sh'
+  scp_flag:
+    CommandLine|contains:
+      - '-s -F'
+      - 'key.ppk'
+      - 'sshcfg'
+  condition: scp_loader and scp_flag
+fields:
+  - CommandLine
+  - Image
+falsepositives:
+  - Legitimate use of scp with an SFTP subsystem flag is possible; the 'dlr@' account and key.ppk/sshcfg together are the distinguishing signal.
+level: high

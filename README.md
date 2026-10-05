@@ -13,6 +13,10 @@ and can be retrieved from MalwareBazaar.
 | 2026-10-05 | [perlbot-irc](perlbot-irc/) — a PBot-derived Perl IRC DDoS bot ("Dred") and its IRC C2 |
 | 2026-10-05 | [xorddos-domain](xorddos-domain/) — the 15th XorDDoS C2 domain the public set was missing |
 
+## Consolidated indicators
+
+All indicators across findings, machine-readable: [`iocs-all.csv`](iocs-all.csv). Methodology: [`METHODOLOGY.md`](METHODOLOGY.md).
+
 ## Weekly reports
 
 [`weekly/`](weekly/) holds dated honeypot activity summaries: attack volume, top source networks, credentials tried, and

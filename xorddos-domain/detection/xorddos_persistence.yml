@@ -1,0 +1,26 @@
+title: XorDDoS Persistence Artifacts (gcc.sh / gcc.pid)
+id: 7a1b9c42-3e8d-4f1a-b2c6-xorddos0001
+status: experimental
+description: >
+  Detects the persistence artifacts dropped by the XorDDoS sample observed by KSI Digital:
+  a cron.hourly/gcc.sh script running every ~3 minutes and a gcc.pid lock file. These are
+  long-standing XorDDoS traits, not unique to this sample.
+references:
+  - https://github.com/ksi-digital/threat-research/tree/main/xorddos-domain
+author: KSI Digital
+date: 2026/10/05
+logsource:
+  category: file_event
+  product: linux
+detection:
+  selection:
+    TargetFilename|endswith:
+      - '/etc/cron.hourly/gcc.sh'
+      - '/gcc.pid'
+  condition: selection
+fields:
+  - TargetFilename
+  - Image
+falsepositives:
+  - A legitimate compiler-related gcc.sh would be unusual in cron.hourly; review context.
+level: high
