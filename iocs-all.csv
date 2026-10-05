@@ -29,7 +29,7 @@ perlbot-irc,ip:port,23.95.235[.]108:6667,PerlBot IRC C2 (channel #new),2026-10-0
 perlbot-irc,url,hxxp://192.227.210[.]190/dred,PerlBot download URL,2026-09-21T00:00:00Z,Cowrie honeypot,https://urlhaus.abuse.ch/url/3920026/
 perlbot-irc,sha256,a37649842a47b845,"PerlBot sample ""DDoS Perl IrcBot v2.0"" (44755 B) - see MalwareBazaar for full hash",2026-10-03T09:47:00Z,Cowrie honeypot,https://bazaar.abuse.ch/
 perlbot-irc,string,Pregatit de actiune!,PBot-derived greeting string,,sample,
-perlbot-irc,string,dreds.network,IRC vhost/cloak (NXDOMAIN, not a resolvable domain),,sample,
+perlbot-irc,string,dreds.network,"IRC vhost/cloak (NXDOMAIN, not a resolvable domain)",,sample,
 xorddos-domain,domain,srv-stat-node[.]ru,XorDDoS C2 domain (previously unlisted),2026-10-03T19:13:00Z,sandbox (offline detonation),https://threatfox.abuse.ch/browse.php?search=ioc%3Asrv-stat-node.ru
 xorddos-domain,sha256,3064ca5f0f0099f9bb98503e0bcb42a2824da2be5c5c2549eea6c2511bea577a,XorDDoS ELF32 i386 sample (114768 B),2026-10-03T19:13:00Z,Cowrie honeypot,https://bazaar.abuse.ch/sample/3064ca5f0f0099f9bb98503e0bcb42a2824da2be5c5c2549eea6c2511bea577a/
 xorddos-domain,port,1531/tcp,XorDDoS C2 port,2026-10-03T19:13:00Z,sandbox,

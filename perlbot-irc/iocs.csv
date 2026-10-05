@@ -3,4 +3,4 @@ ip:port,23.95.235[.]108:6667,PerlBot IRC C2 (channel #new),2026-10-03T09:47:00Z,
 url,hxxp://192.227.210[.]190/dred,PerlBot download URL,2026-09-21T00:00:00Z,Cowrie honeypot,https://urlhaus.abuse.ch/url/3920026/
 sha256,a37649842a47b845,PerlBot sample "DDoS Perl IrcBot v2.0" (44755 B) - see MalwareBazaar for full hash,2026-10-03T09:47:00Z,Cowrie honeypot,https://bazaar.abuse.ch/
 string,Pregatit de actiune!,PBot-derived greeting string,,sample,
-string,dreds.network,IRC vhost/cloak (NXDOMAIN, not a resolvable domain),,sample,
+string,dreds.network,"IRC vhost/cloak (NXDOMAIN, not a resolvable domain)",,sample,

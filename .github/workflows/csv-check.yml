@@ -1,0 +1,23 @@
+name: CSV check
+# Every IOC file must parse as RFC 4180 CSV with the same column count on every row,
+# so GitHub renders it as a searchable table and tools can ingest it.
+on: [push, pull_request]
+jobs:
+  csv:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate column counts
+        run: |
+          python3 - <<'PY'
+          import csv, glob, sys
+          bad = 0
+          for f in sorted(['iocs-all.csv'] + glob.glob('*/iocs.csv')):
+              rows = list(csv.reader(open(f, encoding='utf-8', newline='')))
+              n = len(rows[0])
+              for i, r in enumerate(rows, 1):
+                  if len(r) != n:
+                      print(f"::error file={f},line={i}::{len(r)} fields, header has {n} (unquoted comma?)")
+                      bad += 1
+          sys.exit(1 if bad else 0)
+          PY
