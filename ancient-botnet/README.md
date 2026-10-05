@@ -44,6 +44,7 @@ flowchart LR
 | 2026-10-05 ~01:50 | C2 `89.163.157[.]131:35342` reported to ThreatFox; IP to Spamhaus |
 | 2026-10-05 02:01-02:11 | Controlled 10-minute contact: `ANCT` handshake completed, C2 confirmed live |
 | 2026-10-05 | Hosting provider notified; this write-up published |
+| 2026-10-05 12:58 | `94.154.43[.]196` runs the same Telnet loader routine and delivers a Mirai kit (see section 5) |
 
 ## 1. Delivery
 
@@ -89,7 +90,25 @@ bot -> C2  ...    encrypted stream
 
 The server completed the handshake and kept the session open for the full 10 minutes, which confirms a live C2. During that window it sent nothing beyond its 36-byte reply, so no tasking was observed. The bot uploaded about **1.79 MB** in 2,785 packets (mostly 734-byte segments); the content is encrypted and unknown. `ANCT` reads as an abbreviation of "ANCienT", matching the dropper's naming.
 
-## 5. Detection ideas
+## 5. Delivery infrastructure
+
+*Added 2026-10-05.*
+
+The device that delivered Ancient, `94.154.43[.]138`, ran a short Telnet routine before fetching the dropper. It opens two connections at once and drops one, logs in as root with an empty password, then runs `/bin/busybox TEST`, `cat /proc` and `./` about a second apart. We looked for that sequence in three days of honeypot data (163 addresses that logged in over Telnet). Only three addresses used it:
+
+| Address | Network | First command | What followed |
+| --- | --- | --- | --- |
+| `94.154.43[.]138` | AS219502 | `echo ancient_telnet_ok` | Ancient `persist.sh` from `89.163.157[.]131` (2026-10-04) |
+| `94.154.43[.]196` | AS219502 | `echo SHELL_TEST` | a Mirai kit (`kla.sh` plus 9 builds) from `176.65.139[.]196` (2026-10-05) |
+| `77.239.124[.]121` | AS198364 | `echo SHELL_TEST` | nothing; three probe-only visits (2026-10-04 and 10-05) |
+
+It looks like a generic loader routine whose first line was changed to `ancient_telnet_ok` for this campaign.
+
+Both 94.154.43.0/24 and 176.65.139.0/24 are announced by AS219502 (STORMCLOUD-AS, Storm Industries LLC). RIPE registered that AS on 2026-06-09. It announces five /24s and started announcing these two in June and July 2026. `176.65.139[.]196` is both the Mirai kit's payload server and its C2 (`176.65.139[.]196:18129`, on ThreatFox since 2026-10-01). Ancient's own payload server and C2 are not on this network; they sit at myLoc (AS24961).
+
+What this shows: the same loader tooling, run from the same small network, delivered Ancient and an unrelated Mirai kit a day apart. That fits one operator running both, or a shared loader service with several customers. We can't tell which from our data.
+
+## 6. Detection ideas
 
 Ready-to-use rules are in [`detection/`](detection/): a YARA rule for the dropper (tested, no false positives across ~500 honeypot samples), Suricata rules for the `ANCT` handshake and the C2/payload endpoints, and a Sigma rule for the host persistence artifacts. The signals those rules encode:
 
@@ -98,11 +117,12 @@ Ready-to-use rules are in [`detection/`](detection/): a YARA rule for the droppe
 - Files named `.ancient` anywhere, `/etc/init.d/.ancient`, `/etc/profile.d/.ancient.sh`, and cron lines `*/5 * * * * <path>/.ancient`.
 - The strings `ANCIENT_STARTED` / `ANCIENT_NOCONN` / `ANCIENT_SKIP` / `ANCIENT_FAIL` in Telnet session output.
 
-## 6. Open questions
+## 7. Open questions
 
 - The key exchange and cipher behind the `ANCT` handshake.
 - What the bot uploads (about 1.8 MB in 10 minutes with no instructions from the server).
 - The relation between this campaign and the older use of `zyrec2.duckdns[.]org`, which ThreatFox lists as a Mirai C2 since 2026-06.
+- Whether the Telnet loader routine in section 5 is one operator's tool or a service shared by several botnets.
 
 ## MITRE ATT&CK
 

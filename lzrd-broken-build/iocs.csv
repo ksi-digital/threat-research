@@ -1,0 +1,5 @@
+type,indicator,role,first_seen_utc,source,reference
+ip,14.33.48[.]192,Telnet scanner running a broken LZRD (Mirai) build,2026-10-03T13:25:20Z,Cowrie honeypot,https://www.abuseipdb.com/check/14.33.48.192
+string,/bin/busybox LZRD,shell-check marker (sent XOR-0x09 encoded),2026-10-03T13:25:22Z,Cowrie honeypot,
+string,"&k`g&k|zpkfq)ES[M",XOR-0x09 encoded form of /bin/busybox LZRD as sent on the wire,2026-10-03T13:25:22Z,Cowrie honeypot,
+string,lghkel / zpz}ld / zalee / za,"XOR-0x09 encoded enable / system / shell / sh",2026-10-03T13:25:21Z,Cowrie honeypot,

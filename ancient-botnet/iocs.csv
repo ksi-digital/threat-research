@@ -16,3 +16,7 @@ file,/etc/profile.d/.ancient.sh,login persistence (v3),,dropper,
 cron,*/5 * * * * <dir>/.ancient,cron persistence (user crontab; v3 also /etc/crontab and /var/spool/cron/root),,dropper,
 string,ANCIENT_STARTED / ANCIENT_NOCONN / ANCIENT_SKIP / ANCIENT_FAIL,dropper status markers printed to the loader,,dropper,
 network,"TCP payload ""ANCT"" (41 4E 43 54) as first 4 bytes client->server",C2 protocol tag,2026-10-05T02:01:09Z,sandbox pcap,
+ip,94.154.43[.]196,"Telnet loader using the same probe routine as the Ancient loader; delivered a Mirai kit from 176.65.139[.]196",2026-10-05T12:58:13Z,Cowrie honeypot,https://www.abuseipdb.com/check/94.154.43.196
+ip,77.239.124[.]121,"probe-only address using the same Telnet loader routine (no payload)",2026-10-04T00:31:10Z,Cowrie honeypot,https://www.abuseipdb.com/check/77.239.124.121
+ip:port,176.65.139[.]196:18129,"Mirai C2 of the kit delivered by 94.154.43[.]196 (context; not Ancient)",2026-10-01,third-party,https://threatfox.abuse.ch/ioc/1943514/
+string,"echo ancient_telnet_ok | echo SHELL_TEST, then /bin/busybox TEST, cat /proc, ./",Telnet loader probe routine (root login with empty password),2026-10-04T15:37:32Z,Cowrie honeypot,

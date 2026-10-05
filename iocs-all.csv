@@ -1,5 +1,5 @@
 finding,type,indicator,role,first_seen_utc,source,reference
-ancient-botnet,ip:port,89.163.157[.]131:35342,botnet C2 (custom "ANCT" protocol),2026-10-05T01:36:00Z,sandbox (C2 lookup observed; live handshake 2026-10-05T02:01Z),https://threatfox.abuse.ch/browse.php?search=ioc%3A89.163.157.131
+ancient-botnet,ip:port,89.163.157[.]131:35342,"botnet C2 (custom ""ANCT"" protocol)",2026-10-05T01:36:00Z,sandbox (C2 lookup observed; live handshake 2026-10-05T02:01Z),https://threatfox.abuse.ch/browse.php?search=ioc%3A89.163.157.131
 ancient-botnet,domain,zyrec2.duckdns[.]org,C2 name (resolved via DNS-over-TLS to 1.1.1.1:853),2026-10-05T01:36:00Z,sandbox,https://threatfox.abuse.ch/ioc/1822702/
 ancient-botnet,url,hxxp://89.163.157[.]131:8080/persist.sh,dropper script,2026-10-04T15:37:39Z,Cowrie honeypot,https://urlhaus.abuse.ch/url/3928556/
 ancient-botnet,url,hxxp://89.163.157[.]131:8080/x86_64,bot binary (x86-64),2026-10-04T15:37:41Z,Cowrie honeypot,https://urlhaus.abuse.ch/url/3928557/
@@ -16,6 +16,10 @@ ancient-botnet,file,/etc/profile.d/.ancient.sh,login persistence (v3),,dropper,
 ancient-botnet,cron,*/5 * * * * <dir>/.ancient,cron persistence (user crontab; v3 also /etc/crontab and /var/spool/cron/root),,dropper,
 ancient-botnet,string,ANCIENT_STARTED / ANCIENT_NOCONN / ANCIENT_SKIP / ANCIENT_FAIL,dropper status markers printed to the loader,,dropper,
 ancient-botnet,network,"TCP payload ""ANCT"" (41 4E 43 54) as first 4 bytes client->server",C2 protocol tag,2026-10-05T02:01:09Z,sandbox pcap,
+ancient-botnet,ip,94.154.43[.]196,Telnet loader using the same probe routine as the Ancient loader; delivered a Mirai kit from 176.65.139[.]196,2026-10-05T12:58:13Z,Cowrie honeypot,https://www.abuseipdb.com/check/94.154.43.196
+ancient-botnet,ip,77.239.124[.]121,probe-only address using the same Telnet loader routine (no payload),2026-10-04T00:31:10Z,Cowrie honeypot,https://www.abuseipdb.com/check/77.239.124.121
+ancient-botnet,ip:port,176.65.139[.]196:18129,Mirai C2 of the kit delivered by 94.154.43[.]196 (context; not Ancient),2026-10-01,third-party,https://threatfox.abuse.ch/ioc/1943514/
+ancient-botnet,string,"echo ancient_telnet_ok | echo SHELL_TEST, then /bin/busybox TEST, cat /proc, ./",Telnet loader probe routine (root login with empty password),2026-10-04T15:37:32Z,Cowrie honeypot,
 redtail-sftp-key,ssh-key-fp,SHA256:O/at8341SoPpKvTPvMsJSgjQm30md9VTS2it25sY0vg,embedded ed25519 SFTP client key (comment dlr@sftp); same in web + SSH vector,2026-10-02T21:30:00Z,honeypot (WAF body + Cowrie),
 redtail-sftp-key,ip:port,217.60.103[.]56:22,RedTail stage-2 SFTP C2 (web/PHP-CGI vector),2026-10-02T21:30:00Z,WordPress honeypot WAF body,
 redtail-sftp-key,ip:port,217.60.102[.]5:22,RedTail stage-2 SFTP C2 (SSH-loader vector),2026-10-03T10:01:00Z,Cowrie honeypot,https://threatfox.abuse.ch/ioc/1948446/
@@ -23,7 +27,7 @@ redtail-sftp-key,url,hxxps://217.60.102[.]5/sh,RedTail stage-2 HTTPS fallback,20
 redtail-sftp-key,ua,libredtail-http,RedTail self-propagating scanner/dropper User-Agent,2026-10-02T01:16:00Z,WordPress honeypot,
 perlbot-irc,ip:port,23.95.235[.]108:6667,PerlBot IRC C2 (channel #new),2026-10-03T09:47:00Z,Cowrie honeypot (sample config),https://threatfox.abuse.ch/ioc/1948443/
 perlbot-irc,url,hxxp://192.227.210[.]190/dred,PerlBot download URL,2026-09-21T00:00:00Z,Cowrie honeypot,https://urlhaus.abuse.ch/url/3920026/
-perlbot-irc,sha256,a37649842a47b845,PerlBot sample "DDoS Perl IrcBot v2.0" (44755 B) - see MalwareBazaar for full hash,2026-10-03T09:47:00Z,Cowrie honeypot,https://bazaar.abuse.ch/
+perlbot-irc,sha256,a37649842a47b845,"PerlBot sample ""DDoS Perl IrcBot v2.0"" (44755 B) - see MalwareBazaar for full hash",2026-10-03T09:47:00Z,Cowrie honeypot,https://bazaar.abuse.ch/
 perlbot-irc,string,Pregatit de actiune!,PBot-derived greeting string,,sample,
 perlbot-irc,string,dreds.network,IRC vhost/cloak (NXDOMAIN, not a resolvable domain),,sample,
 xorddos-domain,domain,srv-stat-node[.]ru,XorDDoS C2 domain (previously unlisted),2026-10-03T19:13:00Z,sandbox (offline detonation),https://threatfox.abuse.ch/browse.php?search=ioc%3Asrv-stat-node.ru
@@ -44,3 +48,7 @@ xorddos-domain,domain,nexus-bridge[.]to,XorDDoS C2 domain,2026-09-29,ThreatFox,
 xorddos-domain,domain,net-sync-cache[.]md,XorDDoS C2 domain,2026-09-29,ThreatFox,
 xorddos-domain,domain,db-sync-service[.]ru,XorDDoS C2 domain,2026-09-29,ThreatFox,
 xorddos-domain,file,cron.hourly/gcc.sh,XorDDoS persistence (runs every 3 min),2026-10-03T19:13:00Z,sandbox,
+lzrd-broken-build,ip,14.33.48[.]192,Telnet scanner running a broken LZRD (Mirai) build,2026-10-03T13:25:20Z,Cowrie honeypot,https://www.abuseipdb.com/check/14.33.48.192
+lzrd-broken-build,string,/bin/busybox LZRD,shell-check marker (sent XOR-0x09 encoded),2026-10-03T13:25:22Z,Cowrie honeypot,
+lzrd-broken-build,string,&k`g&k|zpkfq)ES[M,XOR-0x09 encoded form of /bin/busybox LZRD as sent on the wire,2026-10-03T13:25:22Z,Cowrie honeypot,
+lzrd-broken-build,string,lghkel / zpz}ld / zalee / za,XOR-0x09 encoded enable / system / shell / sh,2026-10-03T13:25:21Z,Cowrie honeypot,

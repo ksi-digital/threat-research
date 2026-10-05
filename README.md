@@ -10,6 +10,7 @@ Analyses and indicators from KSI Digital's honeypot research. Each folder covers
 | 2026-10-05 | [redtail-sftp-key](redtail-sftp-key/) - one reused SFTP client key links RedTail's web and SSH delivery |
 | 2026-10-05 | [perlbot-irc](perlbot-irc/) - a PBot-derived Perl IRC DDoS bot ("Dred") and its IRC C2 |
 | 2026-10-05 | [xorddos-domain](xorddos-domain/) - the 15th XorDDoS C2 domain the public set was missing |
+| 2026-10-05 | [lzrd-broken-build](lzrd-broken-build/) - a broken LZRD (Mirai) build that sends its XOR-encoded strings straight onto the wire |
 
 ## Consolidated indicators
 
