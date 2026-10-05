@@ -1,0 +1,16 @@
+cff-version: 1.2.0
+message: "If you reference this research, please cite it as below."
+title: "KSI Digital threat research"
+authors:
+  - name: "KSI Digital"
+    email: "christophe@ksi-digital.com"
+  - family-names: "Hubert"
+    given-names: "Christophe"
+repository-code: "https://github.com/ksi-digital/threat-research"
+license: CC-BY-4.0
+date-released: 2026-10-05
+keywords:
+  - threat intelligence
+  - honeypot
+  - IoT botnet
+  - indicators of compromise

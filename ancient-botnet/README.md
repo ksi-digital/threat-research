@@ -24,6 +24,32 @@ SHA-256 hashes to retrieve them from your usual sample sharing platforms.
 | Evasion | stays dormant while traced (`ptrace`); C2 lookup hidden inside TLS |
 | Persistence | cron every 5 min, `rc.local`, `/etc/init.d/.ancient`, `/etc/profile.d/.ancient.sh` (v3) |
 
+## Infection chain
+
+```mermaid
+flowchart LR
+    A["Infected device<br/>94.154.43[.]138"] -- "Telnet login<br/>+ wget" --> B["Victim<br/>(our honeypot)"]
+    B -- "GET /persist.sh" --> C["Payload server<br/>89.163.157[.]131:8080"]
+    B -- "GET /&lt;arch&gt;" --> C
+    B -- "install .ancient<br/>cron, rc.local, init.d" --> B
+    B -- "DNS-over-TLS<br/>1.1.1.1:853" --> D["zyrec2.duckdns[.]org"]
+    D -. "resolves to" .-> E["C2<br/>89.163.157[.]131:35342"]
+    B -- "ANCT handshake<br/>encrypted session" --> E
+```
+
+## Timeline (UTC)
+
+| Time | Event |
+|---|---|
+| 2026-10-04 15:37 | `94.154.43[.]138` logs in over Telnet; fetches `persist.sh` v1 and the x86-64 bot `6c44cbf5…` |
+| 2026-10-04 (afternoon) | v2 of `persist.sh` served (duplicate-instance guard) |
+| 2026-10-04 19:09 | v3 served (durable-mount selection, port byte-order fix); x86-64 rebuild `748f50d4…` |
+| 2026-10-05 01:09 | Sandbox, traced: no network until the tracer detaches |
+| 2026-10-05 01:36 | Sandbox, untraced: `zyrec2.duckdns[.]org` resolved via DoT; 33 blocked attempts to `:35342` |
+| 2026-10-05 ~01:50 | C2 `89.163.157[.]131:35342` reported to ThreatFox; IP to Spamhaus |
+| 2026-10-05 02:01–02:11 | Controlled 10-minute contact: `ANCT` handshake completed, C2 confirmed live |
+| 2026-10-05 | Hosting provider notified; this write-up published |
+
 ## 1. Delivery
 
 On 2026-10-04 at 15:37:39 UTC an infected device, `94.154.43[.]138`, logged in to our Telnet honeypot and ran:
@@ -110,7 +136,7 @@ T1564.001 Hidden Files · T1071.004 Application Layer Protocol: DNS · T1573 Enc
 - ThreatFox: `89.163.157[.]131:35342` (KSI Digital, 2026-10-05). Domain previously listed: ThreatFox 1822702.
 - URLhaus: payload URLs 3928556, 3928557, 3927883.
 - Spamhaus: `89.163.157[.]131` reported 2026-10-05.
-- Hosting provider (myLoc / WIIT AG): abuse report pending.
+- Hosting provider (myLoc / WIIT AG): notified via its abuse contact on 2026-10-05.
 
 ## Method and handling
 
