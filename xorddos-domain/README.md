@@ -1,6 +1,6 @@
 # XorDDoS: the 15th C2 domain the public set was missing
 
-**KSI Digital threat research · 2026-10-05 · observed 2026-10-03/04**
+**KSI Digital threat research | 2026-10-05 | observed 2026-10-03/04**
 
 A XorDDoS sample uploaded to our SSH honeypot resolved a set of 15 C2 domains. Fourteen were already on ThreatFox; one,
 `srv-stat-node[.]ru`, was not on any feed and had no web hits. We reported it. This note records the chain.
@@ -23,7 +23,7 @@ The sample was already on MalwareBazaar (abuse_ch, 2026-10-01).
 We detonated it offline in the isolated lab (no internet; DNS and connections sinkholed and logged):
 
 - self-copies to `/tmp/<random>`;
-- installs `cron.hourly/gcc.sh` running every 3 minutes, with a `gcc.pid` lock — classic XorDDoS persistence;
+- installs `cron.hourly/gcc.sh` running every 3 minutes, with a `gcc.pid` lock - classic XorDDoS persistence;
 - issued DNS lookups for **15 C2 domains** and fired ~123 SYNs to the sinkhole on TCP **1531** (its C2 port).
 
 The 15 domains follow one naming scheme (`*-node`, `*-sync`, `*-status`, odd TLDs: `.ru .su .to .tj .am .md .vg`):
@@ -35,15 +35,15 @@ dist-patch-log.vg      core-sync-io.tj        stellar-sync.to      relay-agent-v
 nexus-bridge.to        net-sync-cache.md      db-sync-service.ru
 ```
 
-Fourteen were already on ThreatFox (abuse_ch, 2026-09-29, ids 1941525–1941538). **`srv-stat-node[.]ru`** was the gap: no
+Fourteen were already on ThreatFox (abuse_ch, 2026-09-29, ids 1941525-1941538). **`srv-stat-node[.]ru`** was the gap: no
 ThreatFox, URLhaus or MalwareBazaar entry and no web hits.
 
 ## Indicators
 
 | Indicator | Role |
 |---|---|
-| `srv-stat-node[.]ru` | XorDDoS C2 domain (previously unlisted) → ThreatFox (KSI Digital 2026-10-04) |
-| `3064ca5f0f00…` | XorDDoS ELF32 i386 sample (on MalwareBazaar) |
+| `srv-stat-node[.]ru` | XorDDoS C2 domain (previously unlisted) -> ThreatFox (KSI Digital 2026-10-04) |
+| `3064ca5f0f00...` | XorDDoS ELF32 i386 sample (on MalwareBazaar) |
 | TCP `1531` | XorDDoS C2 port |
 | `cron.hourly/gcc.sh`, `gcc.pid` | persistence artifacts |
 
@@ -66,4 +66,4 @@ already indexed by abuse.ch.
 
 Captured passively; analysed offline in an isolated lab with egress sinkholed. No C2 was contacted.
 
-Contact: christophe@ksi-digital.com · abuse.ch `@ksi_digital` · Licensed [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)
+Contact: christophe@ksi-digital.com | abuse.ch `@ksi_digital` | Licensed [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)

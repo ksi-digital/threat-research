@@ -1,4 +1,4 @@
-# Ancient botnet — detection rules
+# Ancient botnet - detection rules
 
 Detection content for the [Ancient botnet](../). The YARA rule is tested against real samples (see notes); the Suricata
 and Sigma rules are written to standard syntax but not engine-validated here. Validate in your own environment.
@@ -21,4 +21,4 @@ and Sigma rules are written to standard syntax but not engine-validated here. Va
   `89.163.157[.]131` endpoints seen on 2026-10-05 and should be treated as dated indicators.
 - **`ancient_host_artifacts.yml`** keys on the unusual `.ancient` filename and the dropper's persistence paths.
 
-Corrections and improvements welcome — open an issue.
+Corrections and improvements welcome - open an issue.
