@@ -1,0 +1,30 @@
+title: Ancient Botnet Host Persistence Artifacts
+id: 8f3c2a10-5d4e-4b2a-9c7e-ancient0001
+status: experimental
+description: >
+  Detects the host artifacts dropped by the "Ancient" Linux IoT botnet dropper (persist.sh):
+  a hidden .ancient binary installed with cron, rc.local, init.d and profile.d persistence.
+references:
+  - https://github.com/ksi-digital/threat-research/tree/main/ancient-botnet
+author: KSI Digital
+date: 2026/10/05
+logsource:
+  category: file_event
+  product: linux
+detection:
+  dropped_binary:
+    TargetFilename|endswith:
+      - '/.ancient'
+      - '/etc/init.d/.ancient'
+      - '/etc/profile.d/.ancient.sh'
+  cron_persistence:
+    TargetFilename|contains:
+      - '/var/spool/cron/'
+    # paired with a command line containing '*/5 * * * *' and '.ancient' in process logs
+  condition: dropped_binary or cron_persistence
+fields:
+  - TargetFilename
+  - Image
+falsepositives:
+  - Unlikely; '.ancient' is an unusual filename chosen by this family.
+level: high
