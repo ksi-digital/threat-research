@@ -134,6 +134,7 @@ T1105 Ingress Tool Transfer | T1053.003 Cron | T1037.004 RC Scripts | T1546.004 
 - URLhaus: payload URLs 3928556, 3928557, 3927883.
 - Spamhaus: `89.163.157[.]131` reported 2026-10-05.
 - Hosting provider (myLoc / WIIT AG): notified via its abuse contact on 2026-10-05.
+- Malpedia: family entry [`elf.ancient`](https://malpedia.caad.fkie.fraunhofer.de/details/elf.ancient) (added 2026-10-06).
 
 ## Method and handling
 
