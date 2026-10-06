@@ -1,0 +1,28 @@
+title: Fake systemd-logind User Unit (Go Telegram Agent)
+id: 3c1e9b52-7a40-4d8e-9f61-2b5d0c7e4a19
+status: experimental
+description: >
+  Detects the persistence of a Go Linux backdoor that takes its C2 from a Telegram bot: a systemd
+  user unit named systemd-logind.service ("System Logging Helper"). The real systemd-logind is a
+  system service and never lives in a user's ~/.config/systemd/user directory.
+references:
+  - https://github.com/ksi-digital/threat-research/tree/main/telegram-go-agent
+author: KSI Digital
+date: 2026/10/06
+logsource:
+  category: file_event
+  product: linux
+detection:
+  user_unit:
+    TargetFilename|endswith: '/.config/systemd/user/systemd-logind.service'
+  staged:
+    TargetFilename|startswith:
+      - '/tmp/.g_'
+      - '/tmp/.gsvc_'
+  condition: user_unit or staged
+fields:
+  - TargetFilename
+  - Image
+falsepositives:
+  - None known; a user-level unit with this name has no legitimate use.
+level: high

@@ -6,6 +6,7 @@ Analyses and indicators from KSI Digital's honeypot research. Each folder covers
 
 | Date | Finding |
 | --- | --- |
+| 2026-10-06 | [telegram-go-agent](telegram-go-agent/) - a Go Linux backdoor, built for 8 CPU architectures, that reads its C2 address from a Telegram bot's pinned message |
 | 2026-10-05 | [ancient-botnet](ancient-botnet/) - a Linux IoT botnet with DNS-over-TLS C2 lookup and a custom `ANCT` C2 protocol |
 | 2026-10-05 | [redtail-sftp-key](redtail-sftp-key/) - one reused SFTP client key links RedTail's web and SSH delivery |
 | 2026-10-05 | [perlbot-irc](perlbot-irc/) - a PBot-derived Perl IRC DDoS bot ("Dred") and its IRC C2 |

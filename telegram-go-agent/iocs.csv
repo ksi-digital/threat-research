@@ -1,0 +1,19 @@
+type,indicator,role,first_seen_utc,source,reference
+url,api.telegram[.]org/bot8850962001:<redacted>/,Telegram bot used as C2 (bot ID 8850962001; full token on ThreatFox),2026-10-06T10:00:00Z,sandbox (static in all 8 builds; live TLS to api.telegram.org observed),https://threatfox.abuse.ch/browse.php?search=ioc%3A8850962001
+string,-1004441259610,Telegram chat ID the agent reads its C2 address from (pinned message),2026-10-06T10:00:00Z,sandbox (static),
+ip:port,176.65.134[.]119:80,installer and payload host; telnet login source,2026-10-05T19:31:01Z,Cowrie honeypot,https://threatfox.abuse.ch/browse.php?search=ioc%3A176.65.134.119
+ip:port,176.65.134[.]119:4444,C2 reported by others (ThreatFox anonymous); not contacted in our live run,2026-10-06T05:27:48Z,ThreatFox,https://threatfox.abuse.ch/browse.php?search=ioc%3A176.65.134.119
+url,hxxp://176.65.134[.]119/agent_i.sh,installer download URL,2026-10-05T19:31:15Z,Cowrie honeypot,
+sha256,2c2511a8da4d5d01ad672f105b9b46b6ccc26754bc6f34b5577673078e3c6681,agent_i.sh installer v1 (1971 B),2026-10-05T19:31:16Z,Cowrie honeypot,https://bazaar.abuse.ch/sample/2c2511a8da4d5d01ad672f105b9b46b6ccc26754bc6f34b5577673078e3c6681/
+sha256,3f17516cc8a591208afb7c49e156643dee6428a238b1d50a7be0443f4a866d24,agent_i.sh installer v2 (2786 B; adds node.js fallback),2026-10-06T10:00:00Z,sandbox fetch,https://bazaar.abuse.ch/sample/3f17516cc8a591208afb7c49e156643dee6428a238b1d50a7be0443f4a866d24/
+sha256,a4f5bec5e206631a718b88e16f1a5fa3ebd0ad55955fd30001c29e42b601beeb,agent_x86_64 (Go ELF x86-64),2026-10-06T10:00:00Z,sandbox fetch,https://bazaar.abuse.ch/sample/a4f5bec5e206631a718b88e16f1a5fa3ebd0ad55955fd30001c29e42b601beeb/
+sha256,2d8fb6368c33ba76766834ab0737e9e830d8413ece0e7568a93fa3f894cd7ef9,agent_i686 (Go ELF i386),2026-10-06T10:00:00Z,sandbox fetch,https://threatfox.abuse.ch/browse.php?search=ioc%3A2d8fb6368c33ba76766834ab0737e9e830d8413ece0e7568a93fa3f894cd7ef9
+sha256,ff1d48aeeda856e3b2f6aac842dc393e1156e1d5f783b1e7f812b3b0d5eb2986,agent_aarch64 (Go ELF ARM64),2026-10-06T10:00:00Z,sandbox fetch,https://threatfox.abuse.ch/browse.php?search=ioc%3Aff1d48aeeda856e3b2f6aac842dc393e1156e1d5f783b1e7f812b3b0d5eb2986
+sha256,c7ef30d2fbc1fad85c9e14c200b9328b7be55b83ab2080e8dd7e25be76abb2dc,agent_armv7 (Go ELF ARM),2026-10-06T10:00:00Z,sandbox fetch,https://threatfox.abuse.ch/browse.php?search=ioc%3Ac7ef30d2fbc1fad85c9e14c200b9328b7be55b83ab2080e8dd7e25be76abb2dc
+sha256,5c1bf506401bda993ceedaf28b90ebff6d6beb92f33b9b975c21fc85b1be2614,agent_mips (Go ELF MIPS32 BE),2026-10-06T10:00:00Z,sandbox fetch,https://threatfox.abuse.ch/browse.php?search=ioc%3A5c1bf506401bda993ceedaf28b90ebff6d6beb92f33b9b975c21fc85b1be2614
+sha256,debdc34170bd40bf2e18611eeb4605f99bd146b88c694cb1d7cf751976ead49e,agent_mipsle (Go ELF MIPS32 LE),2026-10-06T10:00:00Z,sandbox fetch,https://threatfox.abuse.ch/browse.php?search=ioc%3Adebdc34170bd40bf2e18611eeb4605f99bd146b88c694cb1d7cf751976ead49e
+sha256,dbe63e6863be3fefc70f8446134129f8351147c213cea78696e324429cf29393,agent_mips64 (Go ELF MIPS64 BE),2026-10-06T10:00:00Z,sandbox fetch,https://threatfox.abuse.ch/browse.php?search=ioc%3Adbe63e6863be3fefc70f8446134129f8351147c213cea78696e324429cf29393
+sha256,b2c851105fa97e65b4a9068bba3d832b02a0bcb5d594f689e07391403305ebb7,agent_mips64le (Go ELF MIPS64 LE),2026-10-06T10:00:00Z,sandbox fetch,https://threatfox.abuse.ch/browse.php?search=ioc%3Ab2c851105fa97e65b4a9068bba3d832b02a0bcb5d594f689e07391403305ebb7
+file,~/.config/systemd/user/systemd-logind.service,"persistence: user unit ""System Logging Helper"", Restart=always",2026-10-06T10:00:00Z,sandbox (static),
+string,[kworker/0:1-events],process name the agent gives itself,2026-10-06T10:00:00Z,sandbox,
+file,/tmp/.g_<arch>,staged agent path used by agent_i.sh,2026-10-05T19:31:18Z,Cowrie honeypot,
