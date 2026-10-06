@@ -70,7 +70,7 @@ Rules are in [`detection/`](detection/). On a Linux host, the strongest signals 
 
 - ThreatFox: the bot URL (botnet_cc, conf 90) and the eight build hashes (payload, conf 100), KSI Digital 2026-10-06; installer host 176.65.134[.]119:80 (KSI Digital 2026-10-06).
 - MalwareBazaar: installer `3f17516c...` (KSI Digital); `agent_x86_64` and the older installer were already there.
-- Telegram: report to Telegram's abuse team pending.
+- Telegram: bot and chat reported to Telegram's abuse team (abuse@telegram.org), 2026-10-06.
 
 ## Handling
 
