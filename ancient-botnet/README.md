@@ -111,6 +111,8 @@ Both 94.154.43.0/24 and 176.65.139.0/24 are announced by AS219502 (STORMCLOUD-AS
 
 What this shows: the same loader tooling, run from the same small network, delivered Ancient and an unrelated Mirai kit a day apart. That fits one operator running both, or a shared loader service with several customers. We can't tell which from our data.
 
+*Update 2026-10-07.* A third kit points at the same network. The `telnet2.sh` loader our honeypot received on 2026-10-05 (from `93.127.112[.]90`, outside AS219502) fetches `zerobot.<arch>` builds from `176.65.139[.]157`. In our sandbox the ARMv7 build, a Condi-style IoT bot, connects to `94.154.43[.]30:695` (already on [ThreatFox](https://threatfox.abuse.ch/ioc/1952211/)) and scans ports 80, 8080, 37215 and 52869. Both addresses are AS219502. Five more addresses in 94.154.43.0/24 (`.7`, `.57`, `.63`, `.69`, `.70`) logged in to our honeypot between 2026-10-03 and 2026-10-05.
+
 ## 6. Detection ideas
 
 Ready-to-use rules are in [`detection/`](detection/): YARA rules for the dropper and for the bot binary (tested on all four dropper versions and nine bot builds, no false positives; also on YARAhub), Suricata rules for the `ANCT` handshake and the C2/payload endpoints, and a Sigma rule for the host persistence artifacts. The signals those rules encode:
