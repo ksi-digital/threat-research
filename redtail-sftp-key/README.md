@@ -43,6 +43,7 @@ Ready-to-use rules are in [`detection/`](detection/). The signals they encode:
 - A written-out SSH private key whose fingerprint is `SHA256:O/at8341...`, or the comment `dlr@sftp`, anywhere on a host.
 - `scp -s ... dlr@<ip>:sh out_sh` or an SSH config plus key written to `/dev/shm` or `/tmp` just before an outbound SSH/SFTP connection.
 - Inbound requests with User-Agent `libredtail-http`.
+- The RedTail shell stage on disk (`setup.sh`, `clean.sh`): YARA rules `RedTail_Shell_Installer` and `RedTail_Shell_Cleaner`.
 
 ## Reporting status
 

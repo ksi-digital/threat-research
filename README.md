@@ -13,6 +13,20 @@ Analyses and indicators from KSI Digital's honeypot research. Each folder covers
 | 2026-10-05 | [xorddos-domain](xorddos-domain/) - the 15th XorDDoS C2 domain the public set was missing |
 | 2026-10-05 | [lzrd-broken-build](lzrd-broken-build/) - a broken LZRD (Mirai) build that sends its XOR-encoded strings straight onto the wire |
 
+## Detection rules
+
+Each finding's `detection/` folder holds YARA, Suricata and Sigma rules. The YARA rules are tested against our captures, recent MalwareBazaar Linux samples and clean system files before release, and are published on [YARAify](https://yaraify.abuse.ch/user/51901/) (YARAhub, CC BY 4.0), where they run against new MalwareBazaar and YARAify uploads.
+
+| YARA rule | Detects | File |
+| --- | --- | --- |
+| [`Linux_Ancient_Bot`](https://yaraify.abuse.ch/yarahub/rule/Linux_Ancient_Bot/) | Ancient bot ELF (x86-64, ARM) | [`ancient.yar`](ancient-botnet/detection/ancient.yar) |
+| [`Ancient_Telnet_Dropper`](https://yaraify.abuse.ch/yarahub/rule/Ancient_Telnet_Dropper/) | Ancient `persist.sh` dropper | [`ancient.yar`](ancient-botnet/detection/ancient.yar) |
+| [`RedTail_Shell_Installer`](https://yaraify.abuse.ch/yarahub/rule/RedTail_Shell_Installer/) | RedTail `setup.sh` / web dropper installer | [`redtail.yar`](redtail-sftp-key/detection/redtail.yar) |
+| [`RedTail_Shell_Cleaner`](https://yaraify.abuse.ch/yarahub/rule/RedTail_Shell_Cleaner/) | RedTail `clean.sh` | [`redtail.yar`](redtail-sftp-key/detection/redtail.yar) |
+| [`Linux_Go_Telegram_Agent`](https://yaraify.abuse.ch/yarahub/rule/Linux_Go_Telegram_Agent/) | Go Telegram agent ELF (8 architectures) | [`telegram_go_agent.yar`](telegram-go-agent/detection/telegram_go_agent.yar) |
+| [`Linux_Telegram_Agent_Installer`](https://yaraify.abuse.ch/yarahub/rule/Linux_Telegram_Agent_Installer/) | `agent_i.sh` installer | [`telegram_go_agent.yar`](telegram-go-agent/detection/telegram_go_agent.yar) |
+| [`PerlBot_Dred_IRC`](https://yaraify.abuse.ch/yarahub/rule/PerlBot_Dred_IRC/) | PBot-derived Perl IRC bot | [`perlbot.yar`](perlbot-irc/detection/perlbot.yar) |
+
 ## Consolidated indicators
 
 All indicators across findings, machine-readable: [`iocs-all.csv`](iocs-all.csv). Methodology: [`METHODOLOGY.md`](METHODOLOGY.md).

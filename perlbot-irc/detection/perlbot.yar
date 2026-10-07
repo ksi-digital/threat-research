@@ -6,6 +6,12 @@ rule PerlBot_Dred_IRC
         date = "2026-10-05"
         reference = "https://github.com/ksi-digital/threat-research/tree/main/perlbot-irc"
         tlp = "clear"
+        yarahub_uuid = "d21056d3-dfe3-404d-ad50-187e567242d0"
+        yarahub_license = "CC BY 4.0"
+        yarahub_rule_matching_tlp = "TLP:WHITE"
+        yarahub_rule_sharing_tlp = "TLP:WHITE"
+        yarahub_reference_md5 = "10e92cfb8e3bd97b7386e1a5e6f7dfb3"
+        yarahub_reference_link = "https://github.com/ksi-digital/threat-research/tree/main/perlbot-irc"
         // Tested against the captured sample (match) and other honeypot samples (no false positives).
     strings:
         $b1 = "DDoS Perl IrcBot" ascii
