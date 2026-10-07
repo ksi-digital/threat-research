@@ -1,5 +1,5 @@
 type,indicator,role,first_seen_utc,source,reference
-ip:port,89.163.157[.]131:35342,botnet C2 (custom "ANCT" protocol),2026-10-05T01:36:00Z,sandbox (C2 lookup observed; live handshake 2026-10-05T02:01Z),https://threatfox.abuse.ch/browse.php?search=ioc%3A89.163.157.131
+ip:port,89.163.157[.]131:35342,"botnet C2 (custom ""ANCT"" protocol)",2026-10-05T01:36:00Z,sandbox (C2 lookup observed; live handshake 2026-10-05T02:01Z),https://threatfox.abuse.ch/browse.php?search=ioc%3A89.163.157.131
 domain,zyrec2.duckdns[.]org,C2 name (resolved via DNS-over-TLS to 1.1.1.1:853),2026-10-05T01:36:00Z,sandbox,https://threatfox.abuse.ch/ioc/1822702/
 url,hxxp://89.163.157[.]131:8080/persist.sh,dropper script,2026-10-04T15:37:39Z,Cowrie honeypot,https://urlhaus.abuse.ch/url/3928556/
 url,hxxp://89.163.157[.]131:8080/x86_64,bot binary (x86-64),2026-10-04T15:37:41Z,Cowrie honeypot,https://urlhaus.abuse.ch/url/3928557/
@@ -9,6 +9,14 @@ sha256,659742f14304f2ec1cf1ec34833b93002cd360835fff3073d19ea2edf23d6bea,persist.
 sha256,ac62a1dfc283429341b99196d974da0a18ffe4f4e30ac28eb4e9583aed4b592f,persist.sh v3 (5952 B),2026-10-04T19:09:48Z,Cowrie honeypot,
 sha256,6c44cbf5eb5e4f5231964a2fb24ef466b17e967f0d26f57c8285ade7424970db,bot ELF x86-64 (437232 B; static; stripped),2026-10-04T15:37:41Z,Cowrie honeypot,
 sha256,748f50d41a7232d012e1eefdbe9207cc448c2710335989badf458a4720dd717b,bot ELF x86-64 rebuild (437232 B),2026-10-04T19:09:51Z,Cowrie honeypot,
+sha256,203727d32428db693546eb29ab6a12b52a455b7d2a8c58ea8c57c70abb2f1aab,"persist.sh, a fourth version (5765 B; between v2 and v3)",2026-10-05T23:14:16Z,third-party (MalwareBazaar),https://bazaar.abuse.ch/sample/203727d32428db693546eb29ab6a12b52a455b7d2a8c58ea8c57c70abb2f1aab/
+sha256,c9d1bf7bfe1818e071b6b71d10e0a4f2f0a4fcdfcb510acd83fc1f098166c3ee,bot ELF x86-64 (437232 B),2026-10-04T13:37:45Z,third-party (MalwareBazaar),https://bazaar.abuse.ch/sample/c9d1bf7bfe1818e071b6b71d10e0a4f2f0a4fcdfcb510acd83fc1f098166c3ee/
+sha256,c86a0cee1adc167f3c3c1677b3f1e294af418cd3cc57c2aead717573b7fce6c8,bot ELF x86-64 (437232 B),2026-10-04T17:06:37Z,third-party (MalwareBazaar),https://bazaar.abuse.ch/sample/c86a0cee1adc167f3c3c1677b3f1e294af418cd3cc57c2aead717573b7fce6c8/
+sha256,4c49dbbce842ee8489eb38080e2eb258cc15aad68aab77aa1e7a38e691ab948a,bot ELF ARMv7 (449276 B),2026-10-03T17:42:33Z,third-party (MalwareBazaar),https://bazaar.abuse.ch/sample/4c49dbbce842ee8489eb38080e2eb258cc15aad68aab77aa1e7a38e691ab948a/
+sha256,2f4cbba58e684daa23273aae6f0454f78b4f60502826a185ac0ddfe49c6a686a,bot ELF ARMv7 (449484 B),2026-10-04T00:19:57Z,third-party (MalwareBazaar),https://bazaar.abuse.ch/sample/2f4cbba58e684daa23273aae6f0454f78b4f60502826a185ac0ddfe49c6a686a/
+sha256,36d7214b35c74d8784cf0a74e337e7902864d38e822f7c9979133d6123c6bd00,bot ELF ARMv7 (466452 B),2026-10-04T06:53:10Z,third-party (MalwareBazaar),https://bazaar.abuse.ch/sample/36d7214b35c74d8784cf0a74e337e7902864d38e822f7c9979133d6123c6bd00/
+sha256,ad7af34fa799ab9a16df4695068965e40195d2f7b7da176605cb35819647c9f1,bot ELF ARMv7 (466964 B),2026-10-04T12:18:53Z,third-party (MalwareBazaar),https://bazaar.abuse.ch/sample/ad7af34fa799ab9a16df4695068965e40195d2f7b7da176605cb35819647c9f1/
+sha256,507611a45de2fa9f20c1e26e4274b655faf7f47cb2688a1782da25604a2e34c6,bot ELF ARMv7 (467540 B),2026-10-05T00:21:54Z,third-party (MalwareBazaar),https://bazaar.abuse.ch/sample/507611a45de2fa9f20c1e26e4274b655faf7f47cb2688a1782da25604a2e34c6/
 ip,94.154.43[.]138,infected device that delivered the dropper over Telnet,2026-10-04T15:37:39Z,Cowrie honeypot,https://www.abuseipdb.com/check/94.154.43.138
 file,<dir>/.ancient,installed bot binary (dir = most durable writable mount),,dropper,
 file,/etc/init.d/.ancient,boot persistence,,dropper,
@@ -16,7 +24,7 @@ file,/etc/profile.d/.ancient.sh,login persistence (v3),,dropper,
 cron,*/5 * * * * <dir>/.ancient,cron persistence (user crontab; v3 also /etc/crontab and /var/spool/cron/root),,dropper,
 string,ANCIENT_STARTED / ANCIENT_NOCONN / ANCIENT_SKIP / ANCIENT_FAIL,dropper status markers printed to the loader,,dropper,
 network,"TCP payload ""ANCT"" (41 4E 43 54) as first 4 bytes client->server",C2 protocol tag,2026-10-05T02:01:09Z,sandbox pcap,
-ip,94.154.43[.]196,"Telnet loader using the same probe routine as the Ancient loader; delivered a Mirai kit from 176.65.139[.]196",2026-10-05T12:58:13Z,Cowrie honeypot,https://www.abuseipdb.com/check/94.154.43.196
-ip,77.239.124[.]121,"probe-only address using the same Telnet loader routine (no payload)",2026-10-04T00:31:10Z,Cowrie honeypot,https://www.abuseipdb.com/check/77.239.124.121
-ip:port,176.65.139[.]196:18129,"Mirai C2 of the kit delivered by 94.154.43[.]196 (context; not Ancient)",2026-10-01,third-party,https://threatfox.abuse.ch/ioc/1943514/
+ip,94.154.43[.]196,Telnet loader using the same probe routine as the Ancient loader; delivered a Mirai kit from 176.65.139[.]196,2026-10-05T12:58:13Z,Cowrie honeypot,https://www.abuseipdb.com/check/94.154.43.196
+ip,77.239.124[.]121,probe-only address using the same Telnet loader routine (no payload),2026-10-04T00:31:10Z,Cowrie honeypot,https://www.abuseipdb.com/check/77.239.124.121
+ip:port,176.65.139[.]196:18129,Mirai C2 of the kit delivered by 94.154.43[.]196 (context; not Ancient),2026-10-01,third-party,https://threatfox.abuse.ch/ioc/1943514/
 string,"echo ancient_telnet_ok | echo SHELL_TEST, then /bin/busybox TEST, cat /proc, ./",Telnet loader probe routine (root login with empty password),2026-10-04T15:37:32Z,Cowrie honeypot,

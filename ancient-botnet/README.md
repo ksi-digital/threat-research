@@ -65,8 +65,11 @@ The script opens with `# ancient telnet persistence payload - PURE ASCII ONLY`, 
 | v1 (2802 B) | `5e6c8302...be76c8` | install to the first writable dir; cron + rc.local + init.d |
 | v2 (3380 B) | `659742f1...f23d6bea` | refuses to start a second copy ("make the C2 thrash closing same-IP connections") |
 | v3 (5952 B) | `ac62a1df...aed4b592f` | scores `/proc/mounts` to pick a reboot-durable filesystem; adds `/etc/crontab`, `/var/spool/cron/root`, `profile.d`; **fixes a byte-order bug** |
+| other (5765 B) | `203727d3...b2f1aab` | uploaded to MalwareBazaar by another researcher on 2026-10-05; see below |
 
 The byte-order fix shows the authors are testing against real devices. After launch, every version checks `/proc/net/tcp` for an open connection on the C2 port 35342 (`0x8A0E`). v1 and v2 searched for `:0E8A`. That's wrong: the kernel prints ports in host order, so these versions always reported `ANCIENT_NOCONN`. v3 searches for `:8A0E` and explains the fix in a comment. v3 also cites a "reference TELNET_PERSIST_PAYLOAD.sh" for its directory-scoring logic.
+
+A fourth version, uploaded to MalwareBazaar on 2026-10-05 23:14 UTC by another researcher, sits between v2 and v3. It already has v3's mount scoring, but still checks the wrong `:0E8A` port and reports an already-running copy as `ANCIENT_STARTED` where v3 says `ANCIENT_SKIP`. Either the server kept handing out an older build or the operator rolled back. Our dropper rule matches it.
 
 ## 3. C2 discovery and anti-analysis
 
@@ -110,7 +113,7 @@ What this shows: the same loader tooling, run from the same small network, deliv
 
 ## 6. Detection ideas
 
-Ready-to-use rules are in [`detection/`](detection/): a YARA rule for the dropper (tested, no false positives across ~500 honeypot samples), Suricata rules for the `ANCT` handshake and the C2/payload endpoints, and a Sigma rule for the host persistence artifacts. The signals those rules encode:
+Ready-to-use rules are in [`detection/`](detection/): YARA rules for the dropper and for the bot binary (tested on all four dropper versions and nine bot builds, no false positives; also on YARAhub), Suricata rules for the `ANCT` handshake and the C2/payload endpoints, and a Sigma rule for the host persistence artifacts. The signals those rules encode:
 
 - Outbound TCP whose first 4 payload bytes are `ANCT`, especially to port 35342.
 - IoT or embedded devices making DNS-over-TLS (`:853`) connections to public resolvers.
@@ -135,6 +138,8 @@ T1105 Ingress Tool Transfer | T1053.003 Cron | T1037.004 RC Scripts | T1546.004 
 - Spamhaus: `89.163.157[.]131` reported 2026-10-05.
 - Hosting provider (myLoc / WIIT AG): notified via its abuse contact on 2026-10-05.
 - Malpedia: family entry [`elf.ancient`](https://malpedia.caad.fkie.fraunhofer.de/details/elf.ancient) (added 2026-10-06).
+- YARAhub: [`Linux_Ancient_Bot`](https://yaraify.abuse.ch/yarahub/rule/Linux_Ancient_Bot/) and [`Ancient_Telnet_Dropper`](https://yaraify.abuse.ch/yarahub/rule/Ancient_Telnet_Dropper/) (2026-10-07).
+- MalwareBazaar: the nine bot builds there are labelled Mirai; we added a comment with the family and evidence to each (2026-10-07).
 
 ## Method and handling
 
