@@ -6,6 +6,7 @@ Analyses and indicators from KSI Digital's honeypot research. Each folder covers
 
 | Date | Finding |
 | --- | --- |
+| 2026-10-07 | [events-calendar-poc-tool](events-calendar-poc-tool/) - an automated tool tried the Events Calendar comment bug (CVE-2026-78265) on a 6.17.3 site and was stopped; why 6.17.4.1 is still the version to be on |
 | 2026-10-06 | [telegram-go-agent](telegram-go-agent/) - a Go Linux backdoor, built for 8 CPU architectures, that reads its C2 address from a Telegram bot's pinned message |
 | 2026-10-05 | [ancient-botnet](ancient-botnet/) - a Linux IoT botnet with DNS-over-TLS C2 lookup and a custom `ANCT` C2 protocol |
 | 2026-10-05 | [redtail-sftp-key](redtail-sftp-key/) - one reused SFTP client key links RedTail's web and SSH delivery |

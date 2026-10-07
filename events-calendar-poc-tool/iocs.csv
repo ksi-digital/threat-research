@@ -1,0 +1,9 @@
+type,indicator,role,first_seen_utc,source,reference
+ip,157.20.244[.]50,source of both attempts (AS138089),2026-10-07T10:54:51Z,WordPress honeypot,https://www.abuseipdb.com/check/157.20.244.50
+ua,Mozilla/5.0 (tec-generic-async),user agent on all 12 requests,2026-10-07T10:54:51Z,WordPress honeypot,
+uri,"/wp-json/wp/v2/tribe_events?per_page=20&_fields=id,link,comment_status",first request of each run (lists events and their comment status),2026-10-07T10:54:51Z,WordPress honeypot,
+string,"Nice write-up, thanks:",start of the posted comment,2026-10-07T10:54:56Z,WordPress honeypot (request body),
+string,wp:legacy-widget,block markup inside the posted comment,2026-10-07T10:54:56Z,WordPress honeypot (request body),
+pattern,poc[a-z]{6}@poc.invalid,commenter name and email,2026-10-07T10:54:56Z,WordPress honeypot (request body),
+pattern,pwn_tec_[0-9a-f]{6}.php,webshell file the request tries to write (not written on 6.17.3),2026-10-07T10:54:56Z,decoded request body,
+pattern,supper[a-z]{6},administrator account the request tries to create (not created on 6.17.3),2026-10-07T10:54:56Z,decoded request body,

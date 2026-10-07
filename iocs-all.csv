@@ -78,3 +78,11 @@ telegram-go-agent,sha256,b2c851105fa97e65b4a9068bba3d832b02a0bcb5d594f689e073914
 telegram-go-agent,file,~/.config/systemd/user/systemd-logind.service,"persistence: user unit ""System Logging Helper"", Restart=always",2026-10-06T10:00:00Z,sandbox (static),
 telegram-go-agent,string,[kworker/0:1-events],process name the agent gives itself,2026-10-06T10:00:00Z,sandbox,
 telegram-go-agent,file,/tmp/.g_<arch>,staged agent path used by agent_i.sh,2026-10-05T19:31:18Z,Cowrie honeypot,
+events-calendar-poc-tool,ip,157.20.244[.]50,source of both attempts (AS138089),2026-10-07T10:54:51Z,WordPress honeypot,https://www.abuseipdb.com/check/157.20.244.50
+events-calendar-poc-tool,ua,Mozilla/5.0 (tec-generic-async),user agent on all 12 requests,2026-10-07T10:54:51Z,WordPress honeypot,
+events-calendar-poc-tool,uri,"/wp-json/wp/v2/tribe_events?per_page=20&_fields=id,link,comment_status",first request of each run (lists events and their comment status),2026-10-07T10:54:51Z,WordPress honeypot,
+events-calendar-poc-tool,string,"Nice write-up, thanks:",start of the posted comment,2026-10-07T10:54:56Z,WordPress honeypot (request body),
+events-calendar-poc-tool,string,wp:legacy-widget,block markup inside the posted comment,2026-10-07T10:54:56Z,WordPress honeypot (request body),
+events-calendar-poc-tool,pattern,poc[a-z]{6}@poc.invalid,commenter name and email,2026-10-07T10:54:56Z,WordPress honeypot (request body),
+events-calendar-poc-tool,pattern,pwn_tec_[0-9a-f]{6}.php,webshell file the request tries to write (not written on 6.17.3),2026-10-07T10:54:56Z,decoded request body,
+events-calendar-poc-tool,pattern,supper[a-z]{6},administrator account the request tries to create (not created on 6.17.3),2026-10-07T10:54:56Z,decoded request body,
