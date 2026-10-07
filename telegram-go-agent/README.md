@@ -49,10 +49,10 @@ We ran the x86_64 build first fully offline, then on 2026-10-06 with exactly two
 
 | Indicator | Role |
 | --- | --- |
-| `api.telegram[.]org/bot8850962001:<redacted>/` | Telegram bot used as C2 (full token on ThreatFox) |
+| `api.telegram[.]org/bot8850962001:<redacted>/` | Telegram bot used as C2 (full token on [ThreatFox 1955651](https://threatfox.abuse.ch/ioc/1955651/)) |
 | chat ID `-1004441259610` | Telegram chat the agent reads its C2 address from |
 | `176.65.134[.]119:80` | installer and payload host; also the telnet source |
-| `176.65.134[.]119:4444` | reported as C2 by others (ThreatFox, anonymous); not contacted by our run |
+| `176.65.134[.]119:4444` | reported as C2 by others ([ThreatFox 1953806](https://threatfox.abuse.ch/ioc/1953806/), anonymous); not contacted by our run |
 | `a4f5bec5e206...` and 7 more | `agent_<arch>` builds, full list in [`iocs.csv`](iocs.csv) |
 | `2c2511a8da4d...`, `3f17516cc8a5...` | `agent_i.sh` installer, two versions |
 | `systemd-logind.service` user unit, `[kworker/0:1-events]` | host artifacts |
@@ -68,7 +68,7 @@ Rules are in [`detection/`](detection/). On a Linux host, the strongest signals 
 
 ## Reporting status
 
-- ThreatFox: the bot URL (botnet_cc, conf 90) and the eight build hashes (payload, conf 100), KSI Digital 2026-10-06; installer host 176.65.134[.]119:80 (KSI Digital 2026-10-06).
+- ThreatFox: the bot URL ([1955651](https://threatfox.abuse.ch/ioc/1955651/), botnet_cc, conf 90) and the eight build hashes ([1955652](https://threatfox.abuse.ch/ioc/1955652/) to [1955659](https://threatfox.abuse.ch/ioc/1955659/), payload, conf 100), KSI Digital 2026-10-06; installer host 176.65.134[.]119:80 ([1953800](https://threatfox.abuse.ch/ioc/1953800/), KSI Digital 2026-10-06).
 - MalwareBazaar: installer `3f17516c...` (KSI Digital); `agent_x86_64` and the older installer were already there.
 - Telegram: bot and chat reported to Telegram's abuse team (abuse@telegram.org), 2026-10-06.
 
