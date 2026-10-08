@@ -8,7 +8,7 @@ authors:
     given-names: "Christophe"
 repository-code: "https://github.com/ksi-digital/threat-research"
 license: CC-BY-4.0
-date-released: 2026-10-05
+date-released: 2026-10-08
 keywords:
   - threat intelligence
   - honeypot
