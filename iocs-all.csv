@@ -78,8 +78,10 @@ telegram-go-agent,sha256,b2c851105fa97e65b4a9068bba3d832b02a0bcb5d594f689e073914
 telegram-go-agent,file,~/.config/systemd/user/systemd-logind.service,"persistence: user unit ""System Logging Helper"", Restart=always",2026-10-06T10:00:00Z,sandbox (static),
 telegram-go-agent,string,[kworker/0:1-events],process name the agent gives itself,2026-10-06T10:00:00Z,sandbox,
 telegram-go-agent,file,/tmp/.g_<arch>,staged agent path used by agent_i.sh,2026-10-05T19:31:18Z,Cowrie honeypot,
-events-calendar-poc-tool,ip,157.20.244[.]50,source of both attempts (AS138089),2026-10-07T10:54:51Z,WordPress honeypot,https://www.abuseipdb.com/check/157.20.244.50
-events-calendar-poc-tool,ua,Mozilla/5.0 (tec-generic-async),user agent on all 12 requests,2026-10-07T10:54:51Z,WordPress honeypot,
+events-calendar-poc-tool,ip,157.20.244[.]50,source of the first two runs (AS138089),2026-10-07T10:54:51Z,WordPress honeypot,https://www.abuseipdb.com/check/157.20.244.50
+events-calendar-poc-tool,ip,159.89.45[.]50,source of a lighter variant of the same comment (AS14061 DigitalOcean),2026-10-08T22:13:31Z,WordPress honeypot,https://www.abuseipdb.com/check/159.89.45.50
+events-calendar-poc-tool,ip,165.22.115[.]147,source of a lighter variant of the same comment (AS14061 DigitalOcean),2026-10-08T23:00:12Z,WordPress honeypot,https://www.abuseipdb.com/check/165.22.115.147
+events-calendar-poc-tool,ua,Mozilla/5.0 (tec-generic-async),user agent on all 12 requests from 157.20.244[.]50; not used by the later sources,2026-10-07T10:54:51Z,WordPress honeypot,
 events-calendar-poc-tool,uri,"/wp-json/wp/v2/tribe_events?per_page=20&_fields=id,link,comment_status",first request of each run (lists events and their comment status),2026-10-07T10:54:51Z,WordPress honeypot,
 events-calendar-poc-tool,string,"Nice write-up, thanks:",start of the posted comment,2026-10-07T10:54:56Z,WordPress honeypot (request body),
 events-calendar-poc-tool,string,wp:legacy-widget,block markup inside the posted comment,2026-10-07T10:54:56Z,WordPress honeypot (request body),

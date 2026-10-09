@@ -1,6 +1,8 @@
 type,indicator,role,first_seen_utc,source,reference
-ip,157.20.244[.]50,source of both attempts (AS138089),2026-10-07T10:54:51Z,WordPress honeypot,https://www.abuseipdb.com/check/157.20.244.50
-ua,Mozilla/5.0 (tec-generic-async),user agent on all 12 requests,2026-10-07T10:54:51Z,WordPress honeypot,
+ip,157.20.244[.]50,source of the first two runs (AS138089),2026-10-07T10:54:51Z,WordPress honeypot,https://www.abuseipdb.com/check/157.20.244.50
+ip,159.89.45[.]50,source of a lighter variant of the same comment (AS14061 DigitalOcean),2026-10-08T22:13:31Z,WordPress honeypot,https://www.abuseipdb.com/check/159.89.45.50
+ip,165.22.115[.]147,source of a lighter variant of the same comment (AS14061 DigitalOcean),2026-10-08T23:00:12Z,WordPress honeypot,https://www.abuseipdb.com/check/165.22.115.147
+ua,Mozilla/5.0 (tec-generic-async),user agent on all 12 requests from 157.20.244[.]50; not used by the later sources,2026-10-07T10:54:51Z,WordPress honeypot,
 uri,"/wp-json/wp/v2/tribe_events?per_page=20&_fields=id,link,comment_status",first request of each run (lists events and their comment status),2026-10-07T10:54:51Z,WordPress honeypot,
 string,"Nice write-up, thanks:",start of the posted comment,2026-10-07T10:54:56Z,WordPress honeypot (request body),
 string,wp:legacy-widget,block markup inside the posted comment,2026-10-07T10:54:56Z,WordPress honeypot (request body),
