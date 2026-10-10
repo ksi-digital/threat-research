@@ -88,3 +88,13 @@ events-calendar-poc-tool,string,wp:legacy-widget,block markup inside the posted 
 events-calendar-poc-tool,pattern,poc[a-z]{6}@poc.invalid,commenter name and email,2026-10-07T10:54:56Z,WordPress honeypot (request body),
 events-calendar-poc-tool,pattern,pwn_tec_[0-9a-f]{6}.php,webshell file the request tries to write (not written on 6.17.3),2026-10-07T10:54:56Z,decoded request body,
 events-calendar-poc-tool,pattern,supper[a-z]{6},administrator account the request tries to create (not created on 6.17.3),2026-10-07T10:54:56Z,decoded request body,
+mirai-dns-xor-c2,ip:port,159.65.67[.]52:44992,"Mirai C2, decoded from seris.gd A record 120.49.205.109 (XOR E7.70.8E.59); port is random per connection",2026-10-10T01:58:00Z,sandbox (live handshake and 3 min session),https://threatfox.abuse.ch/ioc/1959715/
+mirai-dns-xor-c2,ip:port,206.189.164[.]5:44559,"Mirai C2, decoded from seris.gd A record 41.205.42.92 (XOR E7.70.8E.59); port is random per connection",2026-10-10T02:22:00Z,sandbox (live handshake and 2.5 min session),https://threatfox.abuse.ch/ioc/1959724/
+mirai-dns-xor-c2,domain,seris[.]gd,"primary C2 record; A records are XOR-encoded C2 addresses",2026-10-09T18:22:00Z,sandbox (DNS lookups observed; records resolved 2026-10-10),
+mirai-dns-xor-c2,domain,myrepis[.]gd,"fallback C2 record; A record 87.49.5.113 decodes to the download server",2026-10-09T18:22:00Z,sandbox (DNS lookup observed),https://threatfox.abuse.ch/ioc/1678597/
+mirai-dns-xor-c2,ip,176.65.139[.]40,"download server for tot and jkl<arch> builds",2026-10-09T18:07:00Z,honeypot (telnet session),https://urlhaus.abuse.ch/host/176.65.139.40/
+mirai-dns-xor-c2,url,http://176.65.139[.]40/tot,installer script fetching 11 jkl<arch> builds,2026-10-09T18:07:00Z,honeypot (telnet session),
+mirai-dns-xor-c2,sha256,a7c881fdaa4f1f465d2656dfa51b245f3c3823943a796508fd0906a264ab7553,tot installer (939 bytes),2026-10-09T18:07:00Z,honeypot (captured),
+mirai-dns-xor-c2,sha256,55d19b5c675819d5d2492e10bd44028d3e02426c7fa486c4515b804943e8d54e,jklx86 bot (Mirai),2026-10-09T12:28:00Z,MalwareBazaar,https://bazaar.abuse.ch/sample/55d19b5c675819d5d2492e10bd44028d3e02426c7fa486c4515b804943e8d54e/
+mirai-dns-xor-c2,sha256,61fba4eb0df49bb5408ba96109a26cf7a64a2d123a4afff7b01b1a72f3d2c75b,jklarm7 bot (ARMv7),2026-10-09T00:00:00Z,MalwareBazaar / URLhaus,https://bazaar.abuse.ch/sample/61fba4eb0df49bb5408ba96109a26cf7a64a2d123a4afff7b01b1a72f3d2c75b/
+mirai-dns-xor-c2,sha256,708c3628746961658e1b16c2af396aaa362c868f28681fc7025b69733057b4af,jklmips bot (MIPS big-endian),2026-10-09T00:00:00Z,MalwareBazaar / URLhaus,https://bazaar.abuse.ch/sample/708c3628746961658e1b16c2af396aaa362c868f28681fc7025b69733057b4af/
