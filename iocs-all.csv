@@ -106,3 +106,10 @@ tadashi-arm-bot,sha256,2f85d47c799c82d27a70a9bdc4516aeb9c46a2cfa3da96bd8d2d7dcb4
 tadashi-arm-bot,ip,82.8.153[.]137,Telnet login source that installed the bot,2026-10-09T09:37:00Z,honeypot (telnet session),
 tadashi-arm-bot,ip,212.40.90[.]80,Telnet login source that installed the bot,2026-10-09T21:48:00Z,honeypot (telnet session),
 tadashi-arm-bot,string,Tadashi Tv Control Unit,banner the bot prints on start,2026-10-09T10:07:00Z,sandbox,
+akuma-mips-c2,ip:port,85.137.53[.]167:3169,C2 of client_mips (same host as the payload and loader server),2026-10-10T01:36:00Z,sandbox (offline connect attempts; not contacted),https://threatfox.abuse.ch/ioc/1959712/
+akuma-mips-c2,ip,85.137.53[.]167,payload and loader host (ports 5000 and 24380),2026-10-09T17:27:00Z,honeypot (telnet session) / URLhaus,https://urlhaus.abuse.ch/host/85.137.53.167/
+akuma-mips-c2,url,http://85.137.53[.]167:24380/bins/telnet/wget.sh,loader script URL (answered 404 to us),2026-10-09T17:35:00Z,honeypot (telnet session),https://urlhaus.abuse.ch/host/85.137.53.167/
+akuma-mips-c2,url,http://85.137.53[.]167:24380/bins/payloads//wget.sh,loader script URL (answered 400 to us),2026-10-09T17:27:00Z,honeypot (telnet session),https://urlhaus.abuse.ch/host/85.137.53.167/
+akuma-mips-c2,url,http://85.137.53[.]167:5000/bins/client_mips,MIPS bot download (from URLhaus),2026-09-27T14:01:00Z,URLhaus,https://urlhaus.abuse.ch/host/85.137.53.167/
+akuma-mips-c2,sha256,9e3aa12ebf0d32b7e315de5e0fc742c6f504e35ddedf2ba4205b9bd56ad52224,client_mips (MIPS ELF; Mirai per MalwareBazaar),2026-09-27T14:06:00Z,MalwareBazaar,https://bazaar.abuse.ch/sample/9e3aa12ebf0d32b7e315de5e0fc742c6f504e35ddedf2ba4205b9bd56ad52224/
+akuma-mips-c2,ip,172.166.156[.]160,Telnet login source that tried to fetch the loader,2026-10-09T17:27:00Z,honeypot (telnet session),
