@@ -6,6 +6,7 @@ Analyses and indicators from KSI Digital's honeypot research. Each folder covers
 
 | Date | Finding |
 | --- | --- |
+| 2026-10-10 | [tadashi-arm-bot](tadashi-arm-bot/) - "Tadashi", an unnamed ARM IoT bot whose download and C2 sit on one host; C2 confirmed live |
 | 2026-10-10 | [mirai-dns-xor-c2](mirai-dns-xor-c2/) - a Mirai kit that hides its C2 servers in XOR-encoded DNS A records; key recovered offline, both servers confirmed live |
 | 2026-10-07 | [events-calendar-poc-tool](events-calendar-poc-tool/) - an automated tool tried the Events Calendar comment bug (CVE-2026-78265) on a 6.17.3 site and was stopped; why 6.17.4.1 is still the version to be on |
 | 2026-10-06 | [telegram-go-agent](telegram-go-agent/) - a Go Linux backdoor, built for 8 CPU architectures, that reads its C2 address from a Telegram bot's pinned message |

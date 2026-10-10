@@ -1,0 +1,9 @@
+type,indicator,role,first_seen_utc,source,reference
+ip:port,5.83.134[.]80:14593,"C2 of the Tadashi ARM bot (same host as the payload server)",2026-10-09T10:07:00Z,sandbox (offline connect attempts; live session 2026-10-10T03:34Z),https://threatfox.abuse.ch/ioc/1958282/
+url,http://5.83.134[.]80:24331/tadashi.arm7,payload download,2026-10-09T09:37:00Z,honeypot (telnet session),https://urlhaus.abuse.ch/host/5.83.134.80/
+ip,5.83.134[.]80,payload and C2 host,2026-10-09T09:37:00Z,honeypot (telnet session),
+sha256,a96874d626135f7cb4b1f6727275f5109442e39800299b91376fe22af870aac2,tadashi.arm7 (ARMv7 static ELF; 285264 bytes),2026-10-09T09:37:00Z,honeypot (captured),https://bazaar.abuse.ch/sample/a96874d626135f7cb4b1f6727275f5109442e39800299b91376fe22af870aac2/
+sha256,2f85d47c799c82d27a70a9bdc4516aeb9c46a2cfa3da96bd8d2d7dcb4253746c,rc.local persistence line written by the loader (97 bytes),2026-10-09T09:37:00Z,honeypot (captured),
+ip,82.8.153[.]137,Telnet login source that installed the bot,2026-10-09T09:37:00Z,honeypot (telnet session),
+ip,212.40.90[.]80,Telnet login source that installed the bot,2026-10-09T21:48:00Z,honeypot (telnet session),
+string,Tadashi Tv Control Unit,banner the bot prints on start,2026-10-09T10:07:00Z,sandbox,

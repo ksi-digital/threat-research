@@ -98,3 +98,11 @@ mirai-dns-xor-c2,sha256,a7c881fdaa4f1f465d2656dfa51b245f3c3823943a796508fd0906a2
 mirai-dns-xor-c2,sha256,55d19b5c675819d5d2492e10bd44028d3e02426c7fa486c4515b804943e8d54e,jklx86 bot (Mirai),2026-10-09T12:28:00Z,MalwareBazaar,https://bazaar.abuse.ch/sample/55d19b5c675819d5d2492e10bd44028d3e02426c7fa486c4515b804943e8d54e/
 mirai-dns-xor-c2,sha256,61fba4eb0df49bb5408ba96109a26cf7a64a2d123a4afff7b01b1a72f3d2c75b,jklarm7 bot (ARMv7),2026-10-09T00:00:00Z,MalwareBazaar / URLhaus,https://bazaar.abuse.ch/sample/61fba4eb0df49bb5408ba96109a26cf7a64a2d123a4afff7b01b1a72f3d2c75b/
 mirai-dns-xor-c2,sha256,708c3628746961658e1b16c2af396aaa362c868f28681fc7025b69733057b4af,jklmips bot (MIPS big-endian),2026-10-09T00:00:00Z,MalwareBazaar / URLhaus,https://bazaar.abuse.ch/sample/708c3628746961658e1b16c2af396aaa362c868f28681fc7025b69733057b4af/
+tadashi-arm-bot,ip:port,5.83.134[.]80:14593,"C2 of the Tadashi ARM bot (same host as the payload server)",2026-10-09T10:07:00Z,sandbox (offline connect attempts; live session 2026-10-10T03:34Z),https://threatfox.abuse.ch/ioc/1958282/
+tadashi-arm-bot,url,http://5.83.134[.]80:24331/tadashi.arm7,payload download,2026-10-09T09:37:00Z,honeypot (telnet session),https://urlhaus.abuse.ch/host/5.83.134.80/
+tadashi-arm-bot,ip,5.83.134[.]80,payload and C2 host,2026-10-09T09:37:00Z,honeypot (telnet session),
+tadashi-arm-bot,sha256,a96874d626135f7cb4b1f6727275f5109442e39800299b91376fe22af870aac2,tadashi.arm7 (ARMv7 static ELF; 285264 bytes),2026-10-09T09:37:00Z,honeypot (captured),https://bazaar.abuse.ch/sample/a96874d626135f7cb4b1f6727275f5109442e39800299b91376fe22af870aac2/
+tadashi-arm-bot,sha256,2f85d47c799c82d27a70a9bdc4516aeb9c46a2cfa3da96bd8d2d7dcb4253746c,rc.local persistence line written by the loader (97 bytes),2026-10-09T09:37:00Z,honeypot (captured),
+tadashi-arm-bot,ip,82.8.153[.]137,Telnet login source that installed the bot,2026-10-09T09:37:00Z,honeypot (telnet session),
+tadashi-arm-bot,ip,212.40.90[.]80,Telnet login source that installed the bot,2026-10-09T21:48:00Z,honeypot (telnet session),
+tadashi-arm-bot,string,Tadashi Tv Control Unit,banner the bot prints on start,2026-10-09T10:07:00Z,sandbox,
